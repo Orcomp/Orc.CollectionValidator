@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.CollectionValidator", "Orc.CollectionValidator\Orc.CollectionValidator.csproj", "{EA9BBB0C-76A2-481E-B5CE-1C739245D74A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.CollectionValidator.Test", "Orc.CollectionValidator.Test\Orc.CollectionValidator.Test.csproj", "{35DDC800-B0C4-4BB5-BD5F-ED85DDF50895}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{28A0292A-800C-4A1E-93CA-20128AF29D35}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Orc.CollectionValidator.vsmdi = Orc.CollectionValidator.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Orc.CollectionValidator.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA9BBB0C-76A2-481E-B5CE-1C739245D74A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA9BBB0C-76A2-481E-B5CE-1C739245D74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA9BBB0C-76A2-481E-B5CE-1C739245D74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA9BBB0C-76A2-481E-B5CE-1C739245D74A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35DDC800-B0C4-4BB5-BD5F-ED85DDF50895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35DDC800-B0C4-4BB5-BD5F-ED85DDF50895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35DDC800-B0C4-4BB5-BD5F-ED85DDF50895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35DDC800-B0C4-4BB5-BD5F-ED85DDF50895}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
