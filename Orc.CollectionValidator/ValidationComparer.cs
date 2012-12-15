@@ -4,64 +4,56 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Text;
     using Orc.CollectionValidator.Utilits;
 
     /// <summary>
-    /// The equality comparer.
+    /// Defines methods to support the comparison of objects for equality.
     /// </summary>
-    /// <typeparam name="T">
+    /// <typeparam name="T">The type of objects to compare.
     /// </typeparam>
-    public class EqualityComparer<T> : IEqualityComparer<T>
+    public class ValidationComparer<T> : IEqualityComparer<T>
     {
         /// <summary>
-        /// The equals.
+        /// The equals function to compare objects.
         /// </summary>
         private readonly Func<T, T, bool> equals;
 
         /// <summary>
-        /// The get hash code.
+        /// The hash code function to compare objects.
         /// </summary>
         private readonly Func<T, int> getHashCode;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EqualityComparer{T}"/> class.
+        /// Initializes a new instance of the <see cref="ValidationComparer{T}"/> class.
         /// </summary>
         /// <param name="equals">
-        /// The equals.
+        /// The equals function to compare objects.
         /// </param>
         /// <param name="getHashCode">
-        /// The get hash code.
+        /// The hash code function to compare objects.
         /// </param>
-        public EqualityComparer(Func<T, T, bool> equals = null, Func<T, int> getHashCode = null)
+        public ValidationComparer(Func<T, T, bool> equals = null, Func<T, int> getHashCode = null)
         {
             if (equals == null)
             {
                 this.equals =
-                    (x, y) => (x != null && x.Equals(y)) || (y != null && y.Equals(x));
+                    (x, y) => (x != null && x.Equals(y)) || (y != null && y.Equals(x)) || (x == null && y == null);
             }
             else
             {
                 this.equals = equals;
             }
 
-            if (getHashCode == null)
-            {
-                this.getHashCode = x => x.GetHashCode();
-            }
-            else
-            {
                 this.getHashCode = getHashCode;
-            }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EqualityComparer{T}"/> class.
+        /// Initializes a new instance of the <see cref="ValidationComparer{T}"/> class.
         /// </summary>
         /// <param name="propExpressions">
-        /// The prop expressions.
+        /// Lambda expressions described the properties to compare.
         /// </param>
-        public EqualityComparer(params Expression<Func<T, object>>[] propExpressions)
+        public ValidationComparer(params Expression<Func<T, object>>[] propExpressions)
         {
             if (propExpressions == null)
             {
@@ -77,16 +69,16 @@
         }
 
         /// <summary>
-        /// The equals.
+        /// Determines whether the specified objects are equal.
         /// </summary>
         /// <param name="x">
-        /// The x.
+        /// The first object to compare.
         /// </param>
         /// <param name="y">
-        /// The y.
+        /// The second object to compare.
         /// </param>
         /// <returns>
-        /// The <see cref="bool"/>.
+        /// true if the specified objects are equal; otherwise, false.
         /// </returns>
         public bool Equals(T x, T y)
         {
@@ -94,20 +86,21 @@
         }
 
         /// <summary>
-        /// The get hash code.
+        /// Returns a hash code for the specified object.
         /// </summary>
         /// <param name="obj">
-        /// The obj.
+        /// The <see cref="Object"/> for which a hash code is to be returned.
         /// </param>
         /// <returns>
-        /// The <see cref="int"/>.
+        /// 0 if the hash function is not defined; otherwise the result of hash function.
         /// </returns>
         public int GetHashCode(T obj)
         {
-            if (getHashCode == null)
+            if (this.getHashCode == null)
             {
-                return obj == null ? 0 : obj.GetHashCode();
+                return 0;
             }
+
             return this.getHashCode(obj);
         }
     }

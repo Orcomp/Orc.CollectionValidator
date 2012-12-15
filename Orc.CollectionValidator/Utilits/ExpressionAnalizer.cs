@@ -7,7 +7,7 @@
     using System.Linq.Expressions;
 using System.Reflection;
 
-    internal static class ExpressionAnalizer
+    public static class ExpressionAnalizer
     {
         public static PropertyInfo GetProppertyInfo<T>(Expression<Func<T, object>> propertyExpression)
         {

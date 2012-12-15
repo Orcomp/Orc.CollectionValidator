@@ -50,8 +50,11 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayExtensionTest.cs" />
+    <Compile Include="ExpressionAnalizerTest.cs" />
+    <Compile Include="GenericParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UniqueValidationTest.cs" />
+    <Compile Include="UniqueValidatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Orc.CollectionValidator\Orc.CollectionValidator.csproj">

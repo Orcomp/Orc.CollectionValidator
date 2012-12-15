@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EqualityComparer.cs" />
+    <Compile Include="ValidationComparer.cs" />
     <Compile Include="Exceptions\CollectionValidatorException.cs" />
     <Compile Include="CollectionValidator.cs" />
     <Compile Include="Utilits\ExpressionAnalizer.cs" />

@@ -19,7 +19,7 @@
             {
                 this.errorMessage = errorMessage;
             }
-            this.comparer = new EqualityComparer<T>();
+            this.comparer = new ValidationComparer<T>();
         }
 
         public UniqueValidator(Func<T,T,bool> equals, string errorMessage = null)
@@ -28,7 +28,7 @@
             {
                 this.errorMessage = errorMessage;
             }
-            this.comparer = new EqualityComparer<T>(equals, x => x.GetHashCode());
+            this.comparer = new ValidationComparer<T>(equals, x => x.GetHashCode());
         }
 
         public UniqueValidator(Expression<Func<T, object>>[] properties, string errorMessage = null)
@@ -37,7 +37,7 @@
             {
                 this.errorMessage = errorMessage;
             }
-            this.comparer = new EqualityComparer<T>(properties);
+            this.comparer = new ValidationComparer<T>(properties);
         }
 
         /// <summary>

@@ -8,7 +8,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class UniqueValidationTest
+    public class UniqueValidatorTest
     {
         [TestMethod]
         public void SimpleValidation()
@@ -36,7 +36,7 @@
         [TestMethod]
         public void PropertiesValidation()
         {
-            var validCollection = new List<MyClass>
+            var validCollection1 = new List<MyClass>
                                       {
                                           new MyClass { ID = 1, FirstName = "John", LastName = "Smith" },
                                           new MyClass { ID = 2, FirstName = "Sara", LastName = "Lee" },
@@ -57,7 +57,7 @@
             var validator = new CollectionValidator<MyClass>();
             validator.Unique(x => x.ID);
 
-            var validCollectionValidationResults = validator.Validate(validCollection);
+            var validCollectionValidationResults = validator.Validate(validCollection1);
             Assert.IsTrue(validCollectionValidationResults.IsValid);
 
             var invalidCollectionValidationResults = validator.Validate(invalidCollection1);
@@ -69,7 +69,7 @@
             validator.Unique(x => x.FirstName, x => x.LastName);
 
             invalidCollectionValidationResults = validator.Validate(invalidCollection2);
-            Assert.IsFalse(invalidCollectionValidationResults.IsValid);
+            Assert.IsTrue(invalidCollectionValidationResults.IsValid);
 
             invalidCollectionValidationResults = validator.Validate(invalidCollection1);
             Assert.IsFalse(invalidCollectionValidationResults.IsValid);
