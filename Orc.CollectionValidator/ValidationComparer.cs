@@ -57,7 +57,7 @@
                 throw new ArgumentNullException("propExpressions");
             }
 
-            var properties = propExpressions.Select(ExpressionAnalizer.GetProppertyInfo).ToArray();
+            var properties = propExpressions.Select(x => x.GetProppertyInfo()).ToArray();
             this.equals = (x, y) => !(from propertyInfo in properties
                                       let xVal = propertyInfo.GetValue(x, null)
                                       let yVal = propertyInfo.GetValue(y, null)

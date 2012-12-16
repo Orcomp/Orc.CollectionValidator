@@ -50,11 +50,15 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayExtensionTest.cs" />
-    <Compile Include="ExpressionAnalizerTest.cs" />
-    <Compile Include="GenericParameter.cs" />
+    <Compile Include="CountValidatorTest.cs" />
+    <Compile Include="ExtensionsTest.cs" />
+    <Compile Include="Helpers\GenericParameter.cs" />
+    <Compile Include="Helpers\UniqueTestingData.cs" />
+    <Compile Include="Helpers\UniqueTestingDataFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UniqueValidatorTest.cs" />
+    <Compile Include="CollectionValidatorTest.cs" />
+    <Compile Include="ValidationComparerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Orc.CollectionValidator\Orc.CollectionValidator.csproj">

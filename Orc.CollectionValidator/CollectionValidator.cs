@@ -3,33 +3,42 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Collections;
-    using Orc.CollectionValidator.Exceptions;
     using System.Linq.Expressions;
 
+    /// <summary>
+    /// Main collection validation class.
+    /// </summary>
+    /// <typeparam name="T">Type of collection elements.
+    /// </typeparam>
     public class CollectionValidator<T> : ICollectionValidator<T>
     {
+        /// <summary>
+        /// The list of validators.
+        /// </summary>
         private readonly IList<ICollectionValidator<T>> validators = new List<ICollectionValidator<T>>();
-
-        public CollectionValidator<T> Unique(string errorMessage = null)
+        
+ 
+        /// <summary>
+        /// Adds UniqueValidator to validation sequence.
+        /// </summary>
+        /// <param name="errorMessage">
+        /// The error Message.
+        /// </param>
+        /// <param name="properties">
+        /// Set of key properties to check uniqueness of collection item.
+        /// </param>
+        /// <returns>
+        /// The <see cref="CollectionValidator"/>.
+        /// </returns>
+        public CollectionValidator<T> Unique(string errorMessage = null, params Expression<Func<T, object>>[] properties)
         {
-            this.validators.Add(new UniqueValidator<T>(errorMessage));
+            this.validators.Add(
+                properties.Any()
+                    ? new UniqueValidator<T>(properties, errorMessage)
+                    : new UniqueValidator<T>(errorMessage));
             return this;
         }
-
-        public CollectionValidator<T> Unique(params Expression<Func<T, object>>[] properties)
-        {
-            this.validators.Add(new UniqueValidator<T>(properties));
-            return this;
-        }
-
-        public CollectionValidator<T> Unique(string errorMessage, params Expression<Func<T, object>>[] properties)
-        {
-            this.validators.Add(new UniqueValidator<T>(properties, errorMessage));
-            return this;
-        }
-
+       
         public CollectionValidator<T> CountGreaterThan(int count, string errorMessage = null)
         {
             this.validators.Add(new CountValidator<T>(i => i > count, errorMessage));

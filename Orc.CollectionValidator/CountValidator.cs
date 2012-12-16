@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
 
     public class CountValidator<T> : AbstractCollectionValidator<T>, ICollectionValidator<T>
     {
@@ -18,8 +17,8 @@
 
         public override ValidationResults Validate(IEnumerable<T> collection)
         {
-            return this.countValidator(collection.Count())
-                       ? new ValidationResults(new[] { new ValidationResult { ErrorMessage = errorMessage } })
+            return !this.countValidator(collection.Count())
+                       ? new ValidationResults(new[] { new ValidationResult { ErrorMessage = this.ErrorMessage } })
                        : new ValidationResults(Enumerable.Empty<ValidationResult>());
         }
     }

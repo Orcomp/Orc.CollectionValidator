@@ -1,22 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Orc.CollectionValidator
+﻿namespace Orc.CollectionValidator
 {
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Base class for all collection validators
+    /// </summary>
+    /// <typeparam name="T">Type of collection elements.
+    /// </typeparam>
     public abstract class AbstractCollectionValidator<T> : ICollectionValidator<T>
     {
-        protected readonly string errorMessage = "Collection is not valid";
+        /// <summary>
+        /// The error message.
+        /// </summary>
+        protected readonly string ErrorMessage = "Collection is not valid";
 
-        public AbstractCollectionValidator(string errorMessage = null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractCollectionValidator{T}"/> class.
+        /// </summary>
+        /// <param name="errorMessage">
+        /// The error message.
+        /// </param>
+        protected AbstractCollectionValidator(string errorMessage = null)
         {
-            if (string.IsNullOrWhiteSpace(errorMessage))
+            if (!string.IsNullOrWhiteSpace(errorMessage))
             {
-                this.errorMessage = errorMessage;
+                this.ErrorMessage = errorMessage;
             }
         }
 
+        /// <summary>
+        /// Validates collection
+        /// </summary>
+        /// <param name="collection">
+        /// Collection to validate
+        /// </param>
+        /// <returns>
+        /// The <see cref="ValidationResults"/>.
+        /// </returns>
         public abstract ValidationResults Validate(IEnumerable<T> collection);
     }
 }

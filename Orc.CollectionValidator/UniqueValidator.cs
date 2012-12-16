@@ -6,7 +6,7 @@
     using System.Linq.Expressions;
     using Orc.CollectionValidator.Utilits;
 
-    public class UniqueValidator<T> : AbstractCollectionValidator<T>, ICollectionValidator<T>
+    public class UniqueValidator<T> : AbstractCollectionValidator<T>
     {
         private readonly IEqualityComparer<T> comparer;
         private const string DefaultErrorMessage = "Duplicated items were found in collection";
@@ -66,7 +66,7 @@
                                  {
                                      new UniqueValidationResult
                                          {
-                                             ErrorMessage = this.errorMessage,
+                                             ErrorMessage = this.ErrorMessage,
                                              DuplicatedItems = groupedDuplicates.ToArray()
                                          }
                                  });

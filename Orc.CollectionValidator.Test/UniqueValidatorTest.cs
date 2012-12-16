@@ -3,76 +3,85 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
+    using System.Linq.Expressions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Orc.CollectionValidator.Test.Helpers;
 
     [TestClass]
     public class UniqueValidatorTest
     {
+        const string ErrorMessageText = "error message text";
+
+        public void CanValidateUsingDefaultEqualityComparer()
+        {
+            var validTstingData = UniqueTestingDataFactory.CreateSimpleUniqueData();
+            var invalidTestingData = UniqueTestingDataFactory.CreateSimpleNotUniqueData();
+
+            var myStringCollectionValidator = new UniqueValidator<string>();
+
+            var result = myStringCollectionValidator.Validate(validTstingData.Collection);
+            Assert.IsTrue(result.IsValid);
+
+            result = myStringCollectionValidator.Validate(invalidTestingData.Collection);
+            Assert.IsFalse(result.IsValid);
+
+            var equals = invalidTestingData.IsActualDuplicatesCorrect(
+                ((UniqueValidationResult)result.First()).DuplicatedItems);
+            Assert.IsTrue(equals);
+        }
+
+        public void CanValidateUsingProperties()
+        {
+            var fullyValidData = UniqueTestingDataFactory.CreateUniqueData();
+            var duplicatedIdData = UniqueTestingDataFactory.CreateDuplicatedIdData();
+            var duplicatedLastNameData = UniqueTestingDataFactory.CreateDuplicatedLastNameData();
+            var duplicatedNamesData = UniqueTestingDataFactory.CreateDuplicatedNamesData();
+
+            var validatorById = new UniqueValidator<GenericParameter>(new Expression<Func<GenericParameter, object>>[]
+                                                                          {
+                                                                              x => x.ID
+                                                                          });
+
+            Assert.IsTrue(validatorById.Validate(fullyValidData.Collection).IsValid);            
+            Assert.IsTrue(validatorById.Validate(duplicatedLastNameData.Collection).IsValid);
+            Assert.IsTrue(validatorById.Validate(duplicatedNamesData.Collection).IsValid);
+
+            var result = validatorById.Validate(duplicatedIdData.Collection);
+            Assert.IsFalse(result.IsValid);
+            var equals = duplicatedIdData.IsActualDuplicatesCorrect(
+                ((UniqueValidationResult)result.First()).DuplicatedItems);
+            Assert.IsTrue(equals);
+
+            var expectedErrorMessage = "Duplicated items were found in collection";
+            var actuelErrorMessage = result.First().ErrorMessage;
+            Assert.AreEqual(expectedErrorMessage, actuelErrorMessage);
+
+            var validatorByNames =
+                new UniqueValidator<GenericParameter>(
+                    new Expression<Func<GenericParameter, object>>[] { x => x.FirstName, x => x.LastName },
+                    ErrorMessageText);
+
+            Assert.IsTrue(validatorByNames.Validate(fullyValidData.Collection).IsValid);
+            Assert.IsTrue(validatorByNames.Validate(duplicatedIdData.Collection).IsValid);
+            Assert.IsTrue(validatorByNames.Validate(duplicatedLastNameData.Collection).IsValid);
+            
+            result = validatorByNames.Validate(duplicatedNamesData.Collection);
+            Assert.IsFalse(result.IsValid);
+            equals = duplicatedNamesData.IsActualDuplicatesCorrect(
+                ((UniqueValidationResult)result.First()).DuplicatedItems);
+            Assert.IsTrue(equals);
+
+            expectedErrorMessage = ErrorMessageText;
+            actuelErrorMessage = result.First().ErrorMessage;
+            Assert.AreEqual(expectedErrorMessage, actuelErrorMessage);
+        }
+
         [TestMethod]
-        public void SimpleValidation()
+        public void ValidateTest()
         {
-            var validCollection = new List<string> { "a", "b", "c" };
-            var invalidCollection = new List<string> { "a", "b", "a" };
-
-            var myStringCollectionValidator = new CollectionValidator<string>();
-            myStringCollectionValidator.Unique();
-
-            var validCollectionValidationResults = myStringCollectionValidator.Validate(validCollection);
-            Assert.IsTrue(validCollectionValidationResults.IsValid);
-
-            var invalidCollectionValidationResults = myStringCollectionValidator.Validate(invalidCollection);
-            Assert.IsFalse(invalidCollectionValidationResults.IsValid);
-        }
-
-        class MyClass
-        {
-            public int ID { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-        }
-
-        [TestMethod]
-        public void PropertiesValidation()
-        {
-            var validCollection1 = new List<MyClass>
-                                      {
-                                          new MyClass { ID = 1, FirstName = "John", LastName = "Smith" },
-                                          new MyClass { ID = 2, FirstName = "Sara", LastName = "Lee" },
-                                          new MyClass { ID = 3, FirstName = "Ivan", LastName = "Susanin" }
-                                      };
-            var invalidCollection1 = new List<MyClass>
-                                      {
-                                          new MyClass { ID = 1, FirstName = "John", LastName = "Smith" },
-                                          new MyClass { ID = 1, FirstName = "Sara", LastName = "Lee" },
-                                          new MyClass { ID = 3, FirstName = "Ivan", LastName = "Susanin" }
-                                      };
-            var invalidCollection2 = new List<MyClass>
-                                      {
-                                          new MyClass { ID = 1, FirstName = "John", LastName = "Smith" },
-                                          new MyClass { ID = 2, FirstName = "John", LastName = "Smith" },
-                                          new MyClass { ID = 3, FirstName = "Ivan", LastName = "Susanin" }
-                                      };
-            var validator = new CollectionValidator<MyClass>();
-            validator.Unique(x => x.ID);
-
-            var validCollectionValidationResults = validator.Validate(validCollection1);
-            Assert.IsTrue(validCollectionValidationResults.IsValid);
-
-            var invalidCollectionValidationResults = validator.Validate(invalidCollection1);
-            Assert.IsFalse(invalidCollectionValidationResults.IsValid);
-
-            validCollectionValidationResults = validator.Validate(invalidCollection2);
-            Assert.IsTrue(validCollectionValidationResults.IsValid);
-
-            validator.Unique(x => x.FirstName, x => x.LastName);
-
-            invalidCollectionValidationResults = validator.Validate(invalidCollection2);
-            Assert.IsTrue(invalidCollectionValidationResults.IsValid);
-
-            invalidCollectionValidationResults = validator.Validate(invalidCollection1);
-            Assert.IsFalse(invalidCollectionValidationResults.IsValid);
-        }
+            this.CanValidateUsingDefaultEqualityComparer();
+            this.CanValidateUsingProperties();
+        }               
     }
 }

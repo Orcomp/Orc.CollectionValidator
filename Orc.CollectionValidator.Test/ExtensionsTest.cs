@@ -3,15 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Orc.CollectionValidator.Test.Helpers;
     using Orc.CollectionValidator.Utilits;
 
     [TestClass]
-    public class ArrayExtensionTest
-    {        
-        int[] array = new[] { 0, 1, 2, 3, 1, 1, 2, 3, 4, 5, 3, 4 };        
+    public class ExtensionsTest
+    {
+        private readonly int[] array = new[] { 0, 1, 2, 3, 1, 1, 2, 3, 4, 5, 3, 4 };
 
-        public void SimpleFindAllIndexesTestHelper()
+        public void CanFindAllIndexes()
         {
             var expected = new List<int> { 1, 4, 5 };
 
@@ -19,7 +21,7 @@
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        public void ComparerFindAllIndexesTestHelper()
+        public void CanFindAllIndexesUsingComparer()
         {
             var expected = new List<int> { 1, 4, 5 };
 
@@ -27,7 +29,7 @@
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        public void SkipFindAllIndexesTestHelper()
+        public void CanFindAllIndexesUsingComparerAndSkipList()
         {
             var expected = new List<int> { 1, 5 };
 
@@ -35,12 +37,29 @@
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
+
         [TestMethod]
         public void FindAllIndexesTest()
         {
-            this.SimpleFindAllIndexesTestHelper();
-            this.ComparerFindAllIndexesTestHelper();
-            this.SkipFindAllIndexesTestHelper();
+            this.CanFindAllIndexes();
+            this.CanFindAllIndexesUsingComparer();
+            this.CanFindAllIndexesUsingComparerAndSkipList();
+        }
+
+        public void CanGetProppertyInfo()
+        {
+            var obj = new GenericParameter();
+            var expected = obj.GetType().GetProperty("ID");
+            Expression<Func<GenericParameter, object>> expression = x => x.ID;
+            var actual = expression.GetProppertyInfo();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetProppertyInfoTest()
+        {
+            this.CanGetProppertyInfo();
         }
     }
 }

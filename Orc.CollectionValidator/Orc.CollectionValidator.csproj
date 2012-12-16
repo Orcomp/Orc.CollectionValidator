@@ -43,17 +43,16 @@
     <Compile Include="AbstractCollectionValidator.cs" />
     <Compile Include="CountValidator.cs" />
     <Compile Include="UniqueValidationResult.cs" />
+    <Compile Include="Utilits\Extensions.cs" />
     <Compile Include="ValidationComparer.cs" />
-    <Compile Include="Exceptions\CollectionValidatorException.cs" />
     <Compile Include="CollectionValidator.cs" />
-    <Compile Include="Utilits\ExpressionAnalizer.cs" />
-    <Compile Include="Utilits\ArrayExtension.cs" />
     <Compile Include="ICollectionValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UniqueValidator.cs" />
     <Compile Include="ValidationResult.cs" />
     <Compile Include="ValidationResults.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
