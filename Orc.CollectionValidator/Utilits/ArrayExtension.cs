@@ -9,7 +9,7 @@
     {
         public static IEnumerable<int> FindAllIndexes<T>(this T[] array, int startFrom, IEnumerable<int> skipIndexes, T item, IEqualityComparer<T> comparer=null)
         {
-            List<int> result = new List<int>();
+            var result = new List<int>();
             for (var i = startFrom; i < array.Length; i++)
             {
                 if (skipIndexes.Contains(i))

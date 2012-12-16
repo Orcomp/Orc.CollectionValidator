@@ -4,39 +4,28 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Text;
     using Orc.CollectionValidator.Utilits;
 
-    public class UniqueValidator<T> : ICollectionValidator<T>
+    public class UniqueValidator<T> : AbstractCollectionValidator<T>, ICollectionValidator<T>
     {
         private readonly IEqualityComparer<T> comparer;
-
-        private readonly string errorMessage = "Not all objects incollection are unique";
+        private const string DefaultErrorMessage = "Duplicated items were found in collection";
 
         public UniqueValidator(string errorMessage = null)
+            : base(string.IsNullOrWhiteSpace(errorMessage) ? DefaultErrorMessage : errorMessage)
         {
-            if (!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                this.errorMessage = errorMessage;
-            }
-            this.comparer = new ValidationComparer<T>();
+            this.comparer = EqualityComparer<T>.Default;
         }
 
         public UniqueValidator(Func<T,T,bool> equals, string errorMessage = null)
+            : base(string.IsNullOrWhiteSpace(errorMessage) ? DefaultErrorMessage : errorMessage)
         {
-            if (!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                this.errorMessage = errorMessage;
-            }
             this.comparer = new ValidationComparer<T>(equals, x => x.GetHashCode());
         }
 
         public UniqueValidator(Expression<Func<T, object>>[] properties, string errorMessage = null)
+            : base(string.IsNullOrWhiteSpace(errorMessage) ? DefaultErrorMessage : errorMessage)
         {
-            if (!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                this.errorMessage = errorMessage;
-            }
             this.comparer = new ValidationComparer<T>(properties);
         }
 
@@ -47,28 +36,40 @@
         /// The collection.
         /// </param>
         /// <returns>
-        /// The <see cref="ValidationResult"/>.
+        /// The <see cref="ValidationResults"/>.
         /// </returns>
-        public ValidationResult Validate(IEnumerable<T> collection)
+        public override ValidationResults Validate(IEnumerable<T> collection)
         {
             var enumerable = collection as T[] ?? collection.ToArray();
-            /* 
-            foreach (var item in enumerable)
+
+            var allDuplicates = new List<int>();
+            var groupedDuplicates = new List<int[]>();
+
+            for (var index = 0; index < enumerable.Length; index++)
             {
-                enumerable.GetAllIndexes(item, this.comparer);
-            }            
-            */
-            var distinctCount = this.comparer == null
-                              ? enumerable.Distinct().Count()
-                              : enumerable.Distinct(this.comparer).Count();
-            
-            var count = enumerable.Count();
-            var isValid = distinctCount == count;
-            return new ValidationResult
-                       {
-                           ErrorMessages = isValid ? new string[0] : new[] { this.errorMessage },
-                           IsValid = isValid
-                       };
+                var itemDuplicates = enumerable.FindAllIndexes(index + 1, allDuplicates, enumerable[index], this.comparer);
+                var duplicates = itemDuplicates as IList<int> ?? itemDuplicates.ToList();
+                if (!duplicates.Any())
+                {
+                    continue;
+                }
+
+                allDuplicates.AddRange(duplicates);
+                duplicates.Add(index);
+                groupedDuplicates.Add(duplicates.OrderBy(x => x).ToArray());
+            }
+
+            return allDuplicates.Count == 0
+                       ? new ValidationResults(Enumerable.Empty<ValidationResult>())
+                       : new ValidationResults(
+                             new[]
+                                 {
+                                     new UniqueValidationResult
+                                         {
+                                             ErrorMessage = this.errorMessage,
+                                             DuplicatedItems = groupedDuplicates.ToArray()
+                                         }
+                                 });
         }
 
     }

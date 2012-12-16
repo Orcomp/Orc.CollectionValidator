@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Orc.CollectionValidator
+﻿namespace Orc.CollectionValidator
 {
+    using System.Collections.Generic;
+
     public interface ICollectionValidator<T>
     {
-        ValidationResult Validate(IEnumerable<T> collection);
+        ValidationResults Validate(IEnumerable<T> collection);
     }
 }

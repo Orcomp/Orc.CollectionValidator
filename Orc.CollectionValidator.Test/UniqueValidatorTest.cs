@@ -51,7 +51,7 @@
             var invalidCollection2 = new List<MyClass>
                                       {
                                           new MyClass { ID = 1, FirstName = "John", LastName = "Smith" },
-                                          new MyClass { ID = 2, FirstName = "Sara", LastName = "Smith" },
+                                          new MyClass { ID = 2, FirstName = "John", LastName = "Smith" },
                                           new MyClass { ID = 3, FirstName = "Ivan", LastName = "Susanin" }
                                       };
             var validator = new CollectionValidator<MyClass>();

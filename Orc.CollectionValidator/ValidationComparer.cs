@@ -32,19 +32,16 @@
         /// <param name="getHashCode">
         /// The hash code function to compare objects.
         /// </param>
-        public ValidationComparer(Func<T, T, bool> equals = null, Func<T, int> getHashCode = null)
+        public ValidationComparer(Func<T, T, bool> equals, Func<T, int> getHashCode = null)
         {
             if (equals == null)
             {
-                this.equals =
-                    (x, y) => (x != null && x.Equals(y)) || (y != null && y.Equals(x)) || (x == null && y == null);
-            }
-            else
-            {
-                this.equals = equals;
+                throw new ArgumentNullException("equals");
             }
 
-                this.getHashCode = getHashCode;
+            this.equals = equals;
+
+            this.getHashCode = getHashCode;
         }
 
         /// <summary>

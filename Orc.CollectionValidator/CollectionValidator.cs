@@ -10,11 +10,11 @@
 
     public class CollectionValidator<T> : ICollectionValidator<T>
     {
-        private IList<ICollectionValidator<T>> validators = new List<ICollectionValidator<T>>();
+        private readonly IList<ICollectionValidator<T>> validators = new List<ICollectionValidator<T>>();
 
-        public CollectionValidator<T> Unique()
+        public CollectionValidator<T> Unique(string errorMessage = null)
         {
-            this.validators.Add(new UniqueValidator<T>());
+            this.validators.Add(new UniqueValidator<T>(errorMessage));
             return this;
         }
 
@@ -24,13 +24,50 @@
             return this;
         }
 
-        public ValidationResult Validate(IEnumerable<T> collection)
+        public CollectionValidator<T> Unique(string errorMessage, params Expression<Func<T, object>>[] properties)
         {
-            var messages =
-                this.validators.Select(validator => validator.Validate(collection).ErrorMessages)
-                    .SelectMany(msgList => msgList)
-                    .ToArray();
-            return new ValidationResult { IsValid = messages.Length == 0, ErrorMessages = messages };
+            this.validators.Add(new UniqueValidator<T>(properties, errorMessage));
+            return this;
         }
+
+        public CollectionValidator<T> CountGreaterThan(int count, string errorMessage = null)
+        {
+            this.validators.Add(new CountValidator<T>(i => i > count, errorMessage));
+            return this;
+        }
+
+        public CollectionValidator<T> CountLessThan(int count, string errorMessage = null)
+        {
+            this.validators.Add(new CountValidator<T>(i => i < count, errorMessage));
+            return this;
+        }
+
+        public CollectionValidator<T> CountGreaterOrEqualTo(int count, string errorMessage = null)
+        {
+            this.validators.Add(new CountValidator<T>(i => i >= count, errorMessage));
+            return this;
+        }
+
+        public CollectionValidator<T> CountLessOrEqualTo(int count, string errorMessage = null)
+        {
+            this.validators.Add(new CountValidator<T>(i => i <= count, errorMessage));
+            return this;
+        }
+
+        public CollectionValidator<T> CountCondition(Predicate<int> condition, string errorMessage = null)
+        {
+            this.validators.Add(new CountValidator<T>(condition, errorMessage));
+            return this;
+        }
+
+        public ValidationResults Validate(IEnumerable<T> collection)
+        {
+            return
+                new ValidationResults(
+                    this.validators.Select(validator => validator.Validate(collection))
+                        .SelectMany(varRes => varRes)
+                        .ToArray());
+
+        }        
     }
 }
