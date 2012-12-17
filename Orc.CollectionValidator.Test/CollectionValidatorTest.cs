@@ -8,7 +8,7 @@
     [TestClass]
     public class CollectionValidatorTest
     {
-
+        [TestMethod]
         public void CanValidateSimpleUnique()
         {
             var validTstingData = UniqueTestingDataFactory.CreateSimpleUniqueData();
@@ -18,6 +18,7 @@
             Assert.IsFalse(validator.Validate(invalidTestingData.Collection).IsValid);
         }
 
+        [TestMethod]
         public void CanValidateUsingProperties()
         {
             var fullyValidData = UniqueTestingDataFactory.CreateUniqueData();
@@ -41,6 +42,7 @@
             Assert.IsFalse(validator.Validate(duplicatedIdData.Collection).IsValid);
         }
 
+        [TestMethod]
         public void CanValidateCount()
         {
             var arr = new[] { 1, 2, 3, 4, 5 };
@@ -55,6 +57,7 @@
             Assert.IsTrue(range3To6Validator.Validate(arr).IsValid);
         }
 
+        [TestMethod]
         public void CanValidateCountAndDuplicates()
         {
             var list = new List<int> { 1, 2, 3, 4, 5 };
@@ -64,14 +67,6 @@
 
             list.Add(2);
             Assert.IsFalse(validator.Validate(list).IsValid);
-        }
-
-        [TestMethod]
-        public void ValidateTest()
-        {
-            this.CanValidateSimpleUnique();
-            this.CanValidateUsingProperties();
-            this.CanValidateCount();
         }
     }
 }

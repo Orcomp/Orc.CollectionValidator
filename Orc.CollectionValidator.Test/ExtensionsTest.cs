@@ -13,6 +13,7 @@
     {
         private readonly int[] array = new[] { 0, 1, 2, 3, 1, 1, 2, 3, 4, 5, 3, 4 };
 
+        [TestMethod]
         public void CanFindAllIndexes()
         {
             var expected = new List<int> { 1, 4, 5 };
@@ -21,6 +22,7 @@
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
+        [TestMethod]
         public void CanFindAllIndexesUsingComparer()
         {
             var expected = new List<int> { 1, 4, 5 };
@@ -29,21 +31,13 @@
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
+        [TestMethod]
         public void CanFindAllIndexesUsingComparerAndSkipList()
         {
             var expected = new List<int> { 1, 5 };
 
             var actual = this.array.FindAllIndexes(0, new[] { 4 }, 1, EqualityComparer<int>.Default);
             Assert.IsTrue(expected.SequenceEqual(actual));
-        }
-
-
-        [TestMethod]
-        public void FindAllIndexesTest()
-        {
-            this.CanFindAllIndexes();
-            this.CanFindAllIndexesUsingComparer();
-            this.CanFindAllIndexesUsingComparerAndSkipList();
         }
 
         public void CanGetProppertyInfo()

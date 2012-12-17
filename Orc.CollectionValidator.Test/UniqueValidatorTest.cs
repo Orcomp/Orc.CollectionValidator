@@ -13,6 +13,7 @@
     {
         const string ErrorMessageText = "error message text";
 
+        [TestMethod]
         public void CanValidateUsingDefaultEqualityComparer()
         {
             var validTstingData = UniqueTestingDataFactory.CreateSimpleUniqueData();
@@ -31,6 +32,7 @@
             Assert.IsTrue(equals);
         }
 
+        [TestMethod]
         public void CanValidateUsingProperties()
         {
             var fullyValidData = UniqueTestingDataFactory.CreateUniqueData();
@@ -75,13 +77,6 @@
             expectedErrorMessage = ErrorMessageText;
             actuelErrorMessage = result.First().ErrorMessage;
             Assert.AreEqual(expectedErrorMessage, actuelErrorMessage);
-        }
-
-        [TestMethod]
-        public void ValidateTest()
-        {
-            this.CanValidateUsingDefaultEqualityComparer();
-            this.CanValidateUsingProperties();
-        }               
+        }            
     }
 }

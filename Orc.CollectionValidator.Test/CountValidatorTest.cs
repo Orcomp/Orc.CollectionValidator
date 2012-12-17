@@ -9,6 +9,7 @@
     {
         const string ErrorMessageText = "error message text";
 
+        [TestMethod]
         public void CanValidate()
         {
             var arr = new[] { 1, 2, 3, 4, 5 };
@@ -32,12 +33,6 @@
             expectedErrorMessage = "Invalid collection items count";
             actualErrorMessage = result.First().ErrorMessage;
             Assert.AreEqual(expectedErrorMessage, actualErrorMessage);
-        }
-
-        [TestMethod]
-        public void ValidateTest()
-        {
-            this.CanValidate();
         }
     }
 }
