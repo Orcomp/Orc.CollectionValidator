@@ -46,6 +46,12 @@
             Assert.IsFalse(validator.Validate(duplicatedLastNameData.Collection).IsValid);
             Assert.IsFalse(validator.Validate(duplicatedNamesData.Collection).IsValid);
             Assert.IsFalse(validator.Validate(duplicatedIdData.Collection).IsValid);
+
+            validator = new CollectionValidator<GenericParameter>().Unique(null, x => x.LastName, x => x.FirstName);
+            Assert.IsTrue(validator.Validate(fullyValidData.Collection).IsValid);
+            Assert.IsTrue(validator.Validate(duplicatedLastNameData.Collection).IsValid);
+            Assert.IsFalse(validator.Validate(duplicatedNamesData.Collection).IsValid);
+            Assert.IsTrue(validator.Validate(duplicatedIdData.Collection).IsValid);
         }
 
         [TestMethod]
