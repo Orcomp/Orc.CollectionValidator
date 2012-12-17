@@ -66,7 +66,8 @@
             Assert.IsTrue(validator.Validate(list).IsValid);
 
             list.Add(2);
-            Assert.IsFalse(validator.Validate(list).IsValid);
+            var result = validator.Validate(list);
+            Assert.IsFalse(result.IsValid);
         }
     }
 }

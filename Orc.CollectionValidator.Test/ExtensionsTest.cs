@@ -40,6 +40,7 @@
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
+        [TestMethod]
         public void CanGetProppertyInfo()
         {
             var obj = new GenericParameter();

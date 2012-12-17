@@ -51,8 +51,7 @@
 
             var result = validatorById.Validate(duplicatedIdData.Collection);
             Assert.IsFalse(result.IsValid);
-            var equals = duplicatedIdData.IsActualDuplicatesCorrect(
-                ((UniqueValidationResult)result.First()).DuplicatedItems);
+            var equals = duplicatedIdData.IsActualDuplicatesCorrect(((UniqueValidationResult) result.First()).DuplicatedItems);
             Assert.IsTrue(equals);
 
             var expectedErrorMessage = "Duplicated items were found in collection";

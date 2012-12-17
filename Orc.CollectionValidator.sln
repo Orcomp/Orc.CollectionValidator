@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.CollectionValidator", "Orc.CollectionValidator\Orc.CollectionValidator.csproj", "{EA9BBB0C-76A2-481E-B5CE-1C739245D74A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.CollectionValidator.Test", "Orc.CollectionValidator.Test\Orc.CollectionValidator.Test.csproj", "{35DDC800-B0C4-4BB5-BD5F-ED85DDF50895}"
@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
 		Orc.CollectionValidator.vsmdi = Orc.CollectionValidator.vsmdi
+		README.md = README.md
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
