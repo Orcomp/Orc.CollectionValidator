@@ -71,6 +71,8 @@
 
         public ValidationResults Validate(IEnumerable<T> collection)
         {
+            if (validators.Count == 0)
+                throw new InvalidOperationException("Collection validator not configured.");
             return
                 new ValidationResults(
                     this.validators.Select(validator => validator.Validate(collection))

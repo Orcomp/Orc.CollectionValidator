@@ -13,7 +13,7 @@
         {
             var validTstingData = UniqueTestingDataFactory.CreateSimpleUniqueData();
             var invalidTestingData = UniqueTestingDataFactory.CreateSimpleNotUniqueData();
-            var validator = new CollectionValidator<string>();
+            var validator = new CollectionValidator<string>().Unique();
             Assert.IsTrue(validator.Validate(validTstingData.Collection).IsValid);
             Assert.IsFalse(validator.Validate(invalidTestingData.Collection).IsValid);
         }
@@ -34,11 +34,17 @@
             Assert.IsTrue(validator.Validate(duplicatedNamesData.Collection).IsValid);
             Assert.IsFalse(validator.Validate(duplicatedIdData.Collection).IsValid);
 
-            validator.Unique(null, x => x.LastName);
+            validator = new CollectionValidator<GenericParameter>().Unique(null, x => x.LastName);
 
             Assert.IsTrue(validator.Validate(fullyValidData.Collection).IsValid);
             Assert.IsFalse(validator.Validate(duplicatedLastNameData.Collection).IsValid);
-            Assert.IsTrue(validator.Validate(duplicatedNamesData.Collection).IsValid);
+            Assert.IsFalse(validator.Validate(duplicatedNamesData.Collection).IsValid);
+            Assert.IsTrue(validator.Validate(duplicatedIdData.Collection).IsValid);
+
+            validator.Unique(null, x => x.ID);
+            Assert.IsTrue(validator.Validate(fullyValidData.Collection).IsValid);
+            Assert.IsFalse(validator.Validate(duplicatedLastNameData.Collection).IsValid);
+            Assert.IsFalse(validator.Validate(duplicatedNamesData.Collection).IsValid);
             Assert.IsFalse(validator.Validate(duplicatedIdData.Collection).IsValid);
         }
 
