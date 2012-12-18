@@ -69,6 +69,12 @@
             return this;
         }
 
+        public CollectionValidator<T> Single()
+        {
+            this.validators.Add(new CountValidator<T>(x => x == 1));
+            return this;
+        }
+
         public ValidationResults Validate(IEnumerable<T> collection)
         {
             if (validators.Count == 0)
