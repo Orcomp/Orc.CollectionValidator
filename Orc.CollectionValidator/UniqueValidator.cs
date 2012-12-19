@@ -12,19 +12,19 @@
         private const string DefaultErrorMessage = "Duplicated items were found in collection";
 
         public UniqueValidator(string errorMessage = null)
-            : base(string.IsNullOrWhiteSpace(errorMessage) ? DefaultErrorMessage : errorMessage)
+            : base(string.IsNullOrEmpty(errorMessage) ? DefaultErrorMessage : errorMessage)
         {
             this.comparer = EqualityComparer<T>.Default;
         }
 
         public UniqueValidator(Func<T,T,bool> equals, string errorMessage = null)
-            : base(string.IsNullOrWhiteSpace(errorMessage) ? DefaultErrorMessage : errorMessage)
+            : base(string.IsNullOrEmpty(errorMessage) ? DefaultErrorMessage : errorMessage)
         {
             this.comparer = new ValidationComparer<T>(equals, x => x.GetHashCode());
         }
 
         public UniqueValidator(Expression<Func<T, object>>[] properties, string errorMessage = null)
-            : base(string.IsNullOrWhiteSpace(errorMessage) ? DefaultErrorMessage : errorMessage)
+            : base(string.IsNullOrEmpty(errorMessage) ? DefaultErrorMessage : errorMessage)
         {
             this.comparer = new ValidationComparer<T>(properties);
         }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -11,6 +12,11 @@
     /// </summary>
     public static class Extensions
     {
+        public static WrappedCollectionValidator<T> BuildValidator<T>(this IEnumerable<T> collection)
+        {
+            return new WrappedCollectionValidator<T>(collection);
+        }
+
         /// <summary>
         /// Searches all indexes of duplicated objects
         /// </summary>
@@ -34,7 +40,7 @@
         /// <returns>
         /// The indexes of duplicated objects.
         /// </returns>
-        public static IEnumerable<int> FindAllIndexes<T>(this T[] array, int startFrom, IEnumerable<int> skipIndexes, T item, IEqualityComparer<T> comparer = null)
+        internal static IEnumerable<int> FindAllIndexes<T>(this T[] array, int startFrom, IEnumerable<int> skipIndexes, T item, IEqualityComparer<T> comparer = null)
         {
             var result = new List<int>();
             for (var i = startFrom; i < array.Length; i++)
@@ -69,18 +75,21 @@
         /// <returns>
         /// The <see cref="PropertyInfo"/>.
         /// </returns>
-        public static PropertyInfo GetProppertyInfo<T, TProp>(this Expression<Func<T, TProp>> propertyExpression)
+        internal static PropertyInfo GetProppertyInfo<T, TProp>(this Expression<Func<T, TProp>> propertyExpression)
         {
-            dynamic body;
-            if (propertyExpression.Body is UnaryExpression)
+            MemberExpression body;
+            var expression = propertyExpression.Body as UnaryExpression;
+            if (expression != null)
             {
-                dynamic unaryBody = propertyExpression.Body;
-                body = unaryBody.Operand;
+                var unaryBody = expression;
+                body = unaryBody.Operand as MemberExpression;
             }
             else
             {
-                body = propertyExpression.Body;
+                body = propertyExpression.Body as MemberExpression;
             }
+
+            Debug.Assert(body != null, "body != null");
 
             return typeof(T).GetProperty(body.Member.Name);
         }

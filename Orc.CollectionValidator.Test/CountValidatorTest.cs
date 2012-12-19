@@ -7,7 +7,7 @@
     [TestClass]
     public class CountValidatorTest
     {
-        const string ErrorMessageText = "error message text";
+        const string ErrorMessageText = "error message text";        
 
         [TestMethod]
         public void CanValidate()
@@ -19,7 +19,7 @@
             var countLessThan3 = new CountValidator<int>(count => count < 3);
 
             Assert.IsTrue(countGreaterThen4.Validate(arr).IsValid);
-            
+
             var result = countGreaterThen5.Validate(arr);
             Assert.IsFalse(result.IsValid);
             var expectedErrorMessage = ErrorMessageText;

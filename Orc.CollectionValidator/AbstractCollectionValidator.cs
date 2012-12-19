@@ -1,6 +1,7 @@
 ﻿namespace Orc.CollectionValidator
 {
     using System.Collections.Generic;
+    using Orc.CollectionValidator.Interfaces;
 
     /// <summary>
     /// Base class for all collection validators
@@ -22,7 +23,7 @@
         /// </param>
         protected AbstractCollectionValidator(string errorMessage = null)
         {
-            if (!string.IsNullOrWhiteSpace(errorMessage))
+            if (!string.IsNullOrEmpty(errorMessage))
             {
                 this.ErrorMessage = errorMessage;
             }

@@ -4,13 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using Orc.CollectionValidator.Interfaces;
 
     /// <summary>
     /// Main collection validation class.
     /// </summary>
     /// <typeparam name="T">Type of collection elements.
     /// </typeparam>
-    public class CollectionValidator<T> : ICollectionValidator<T>
+    public class CollectionValidator<T> : ICollectionValidator<T>, IFluentCollectionValidator<CollectionValidator<T>, T>
     {
         /// <summary>
         /// The list of validators.
@@ -85,6 +86,7 @@
                         .SelectMany(varRes => varRes)
                         .ToArray());
 
-        }        
+        }
+
     }
 }

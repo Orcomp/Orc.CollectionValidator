@@ -70,6 +70,19 @@
         }
 
         [TestMethod]
+        public void CanValidateSingleElementCollection()
+        {
+            var single = new[] { 1 };
+            var multiple = new[] { 1, 2 };
+            var empty = new int[0];
+
+            var validator = new CollectionValidator<int>().Single();
+            Assert.IsTrue(validator.Validate(single).IsValid);
+            Assert.IsFalse(validator.Validate(multiple).IsValid);
+            Assert.IsFalse(validator.Validate(empty).IsValid);
+        }
+
+        [TestMethod]
         public void CanValidateCountAndDuplicates()
         {
             var list = new List<int> { 1, 2, 3, 4, 5 };
