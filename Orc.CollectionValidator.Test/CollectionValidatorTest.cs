@@ -4,6 +4,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Orc.CollectionValidator.Test.Helpers;
     using System.Collections.Generic;
+    using FluentValidation;
 
     [TestClass]
     public class CollectionValidatorTest
@@ -93,6 +94,17 @@
             list.Add(2);
             var result = validator.Validate(list);
             Assert.IsFalse(result.IsValid);
+        }
+
+        [TestMethod]
+        public void CanValidateElementsUsingRules()
+        {
+           // var validator = new CollectionValidator<int>().ElementValidation(
+             //   x => x, x => x.LessThan(2));
+           // FluentValidation.Internal.PropertyRule.Create()
+           // new FluentValidation.InlineValidator<GenericParameter>().AddRule(IRuleBuilderOptions<GenericParameter,string>)
+
+            Assert.Inconclusive("Not implemented yet");
         }
     }
 }

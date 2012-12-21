@@ -1,4 +1,4 @@
-﻿namespace Orc.CollectionValidator
+﻿namespace Orc.CollectionValidator.SpecificValidators
 {
     using System;
     using System.Collections.Generic;

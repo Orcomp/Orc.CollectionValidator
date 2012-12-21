@@ -20,5 +20,12 @@
         TBuilder CountCondition(Predicate<int> condition, string errorMessage = null);
 
         TBuilder Single();
+
+        TBuilder ElementValidation(FluentValidation.AbstractValidator<T> validator);
+
+        TBuilder ElementValidation<TProp>(
+            Expression<Func<T, TProp>> property,
+            Func<FluentValidation.IRuleBuilder<T, TProp>, FluentValidation.IRuleBuilderOptions<T, TProp>>
+                validationRules);
     }
 }

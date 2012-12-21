@@ -1,6 +1,6 @@
 ﻿namespace Orc.CollectionValidator.Interfaces
 {
-    public interface IWrappedCollectionValidator
+    public interface IWrappedValidator
     {
         ValidationResults Validate();
     }

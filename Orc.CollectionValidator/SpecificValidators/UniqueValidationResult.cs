@@ -1,4 +1,4 @@
-﻿namespace Orc.CollectionValidator
+﻿namespace Orc.CollectionValidator.SpecificValidators
 {
     public class UniqueValidationResult : ValidationResult
     {

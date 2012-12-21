@@ -3,6 +3,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Orc.CollectionValidator;
     using System.Linq;
+    using Orc.CollectionValidator.SpecificValidators;
 
     [TestClass]
     public class CountValidatorTest

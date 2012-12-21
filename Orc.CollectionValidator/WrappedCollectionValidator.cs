@@ -5,7 +5,7 @@
     using System.Linq.Expressions;
     using Orc.CollectionValidator.Interfaces;
 
-    public class WrappedCollectionValidator<T> : IWrappedCollectionValidator, IFluentCollectionValidator<WrappedCollectionValidator<T>, T>
+    public class WrappedCollectionValidator<T> : IWrappedValidator, IFluentCollectionValidator<WrappedCollectionValidator<T>, T>
     {
         private readonly CollectionValidator<T> validator;
 
@@ -56,6 +56,19 @@
         public WrappedCollectionValidator<T> Single()
         {
             this.validator.Single();
+            return this;
+        }        
+
+
+        public WrappedCollectionValidator<T> ElementValidation(FluentValidation.AbstractValidator<T> validator)
+        {
+            this.validator.ElementValidation(validator);
+            return this;
+        }
+        
+        public WrappedCollectionValidator<T> ElementValidation<TProp>(Expression<Func<T, TProp>> property, Func<FluentValidation.IRuleBuilder<T, TProp>, FluentValidation.IRuleBuilderOptions<T, TProp>> validationRules)
+        {
+            this.validator.ElementValidation(property, validationRules);
             return this;
         }
 

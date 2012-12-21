@@ -4,7 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+
+    using FluentValidation.Internal;
+
     using Orc.CollectionValidator.Interfaces;
+using FluentValidation;
+    using Orc.CollectionValidator.SpecificValidators;
 
     /// <summary>
     /// Main collection validation class.
@@ -17,6 +22,8 @@
         /// The list of validators.
         /// </summary>
         private readonly IList<ICollectionValidator<T>> validators = new List<ICollectionValidator<T>>();
+
+        private CollectionItemValidator<T> itemValidator;
         
  
         /// <summary>
@@ -76,6 +83,37 @@
             return this;
         }
 
+        public CollectionValidator<T> ElementValidation(AbstractValidator<T> validator)
+        {
+            if (this.itemValidator == null)
+            {
+                CreateItemValidator(validator);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+            return this;
+        }
+
+        public CollectionValidator<T> ElementValidation<TProp>(Expression<Func<T, TProp>> property, Func<IRuleBuilder<T, TProp>, IRuleBuilderOptions<T, TProp>> validationRules)
+        {
+            if (this.itemValidator == null)
+            {
+                CreateItemValidator(new ItemValidator<T>());                
+            }
+
+            validationRules(this.itemValidator.CreateRule(property));
+
+            return this;
+        }
+
+        private void CreateItemValidator(AbstractValidator<T> validator)
+        {
+            this.itemValidator = new CollectionItemValidator<T>(validator);
+            this.validators.Add(this.itemValidator);
+        }
+
         public ValidationResults Validate(IEnumerable<T> collection)
         {
             if (validators.Count == 0)
@@ -86,7 +124,6 @@
                         .SelectMany(varRes => varRes)
                         .ToArray());
 
-        }
-
+        }        
     }
 }
