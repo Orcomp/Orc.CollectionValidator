@@ -47,10 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractCollectionValidator.cs" />
-    <Compile Include="SpecificValidators\CollectionItemValidator.cs" />
+    <Compile Include="SpecificValidators\ElementValidator.cs" />
     <Compile Include="SpecificValidators\CountValidator.cs" />
+    <Compile Include="ElrmentWrapper.cs" />
     <Compile Include="SpecificValidators\ItemValidationResult.cs" />
-    <Compile Include="SpecificValidators\ItemValidator.cs" />
     <Compile Include="WrappedCollectionValidator.cs" />
     <Compile Include="Interfaces\IWrappedValidator.cs" />
     <Compile Include="Interfaces\IFluentCollectionValidator.cs" />

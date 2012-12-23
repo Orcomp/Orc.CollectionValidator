@@ -27,5 +27,11 @@
             Expression<Func<T, TProp>> property,
             Func<FluentValidation.IRuleBuilder<T, TProp>, FluentValidation.IRuleBuilderOptions<T, TProp>>
                 validationRules);
+
+        TBuilder ElementValidation(
+            Func<FluentValidation.IRuleBuilder<ElementWrapper<T>, T>, FluentValidation.IRuleBuilderOptions<ElementWrapper<T>, T>>
+                validationRules);
+
+        TBuilder ElementValidationMessage(string errorMessage);
     }
 }

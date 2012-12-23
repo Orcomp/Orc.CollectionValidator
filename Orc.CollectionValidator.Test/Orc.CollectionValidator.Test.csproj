@@ -56,11 +56,13 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollectionItemValidatorTest.cs" />
+    <Compile Include="ElementValidatorTest.cs" />
     <Compile Include="CountValidatorTest.cs" />
     <Compile Include="ExtensionsTest.cs" />
+    <Compile Include="Helpers\ComposedValidationDataFactory.cs" />
+    <Compile Include="Helpers\ElementValidationTestingDataFactory.cs" />
     <Compile Include="Helpers\GenericParameter.cs" />
-    <Compile Include="Helpers\GenericParameterValidator.cs" />
+    <Compile Include="Helpers\TestingDataFactory.cs" />
     <Compile Include="Helpers\UniqueTestingData.cs" />
     <Compile Include="Helpers\UniqueTestingDataFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

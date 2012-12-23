@@ -4,11 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-
-    using FluentValidation.Internal;
-
+    using FluentValidation;
     using Orc.CollectionValidator.Interfaces;
-using FluentValidation;
     using Orc.CollectionValidator.SpecificValidators;
 
     /// <summary>
@@ -23,9 +20,15 @@ using FluentValidation;
         /// </summary>
         private readonly IList<ICollectionValidator<T>> validators = new List<ICollectionValidator<T>>();
 
-        private CollectionItemValidator<T> itemValidator;
-        
- 
+        private readonly ElementValidator<T> elementValidator;
+
+
+        public CollectionValidator()
+        {
+            this.elementValidator = new ElementValidator<T>();
+            this.validators.Add(this.elementValidator);
+        }       
+
         /// <summary>
         /// Adds UniqueValidator to validation sequence.
         /// </summary>
@@ -85,33 +88,31 @@ using FluentValidation;
 
         public CollectionValidator<T> ElementValidation(AbstractValidator<T> validator)
         {
-            if (this.itemValidator == null)
-            {
-                CreateItemValidator(validator);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-            return this;
-        }
 
-        public CollectionValidator<T> ElementValidation<TProp>(Expression<Func<T, TProp>> property, Func<IRuleBuilder<T, TProp>, IRuleBuilderOptions<T, TProp>> validationRules)
-        {
-            if (this.itemValidator == null)
-            {
-                CreateItemValidator(new ItemValidator<T>());                
-            }
-
-            validationRules(this.itemValidator.CreateRule(property));
+            this.elementValidator.AddValidator(validator);
 
             return this;
         }
 
-        private void CreateItemValidator(AbstractValidator<T> validator)
+        public CollectionValidator<T> ElementValidation<TProp>(Expression<Func<T, TProp>> property, Func<IRuleBuilder<T, TProp>, IRuleBuilderOptions<T, TProp>> validationRule)
         {
-            this.itemValidator = new CollectionItemValidator<T>(validator);
-            this.validators.Add(this.itemValidator);
+            validationRule(this.elementValidator.CreatePropertyRule(property));
+
+            return this;
+        }
+
+        public CollectionValidator<T> ElementValidation(Func<IRuleBuilder<ElementWrapper<T>, T>, IRuleBuilderOptions<ElementWrapper<T>, T>> validationRule)
+        {
+            validationRule(this.elementValidator.CreateRule());
+
+            return this;
+        }
+
+        public CollectionValidator<T> ElementValidationMessage(string errorMessage)
+        {
+            this.elementValidator.SetErrorMessage(errorMessage);
+
+            return this;
         }
 
         public ValidationResults Validate(IEnumerable<T> collection)
@@ -124,6 +125,6 @@ using FluentValidation;
                         .SelectMany(varRes => varRes)
                         .ToArray());
 
-        }        
+        }
     }
 }

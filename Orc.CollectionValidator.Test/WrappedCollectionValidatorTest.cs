@@ -11,8 +11,8 @@
         [TestMethod]
         public void CanValidateSimpleUnique()
         {
-            var validTstingData = UniqueTestingDataFactory.CreateSimpleUniqueData();
-            var invalidTestingData = UniqueTestingDataFactory.CreateSimpleNotUniqueData();
+            var validTstingData = TestingDataFactory.Unique.CreateSimpleUniqueData();
+            var invalidTestingData = TestingDataFactory.Unique.CreateSimpleNotUniqueData();
             var trueValidator = validTstingData.Collection.BuildValidator().Unique();
             var falseValidator = invalidTestingData.Collection.BuildValidator().Unique();
             Assert.IsTrue(trueValidator.Validate().IsValid);
@@ -22,10 +22,10 @@
         [TestMethod]
         public void CanValidateUsingProperties()
         {
-            var fullyValidData = UniqueTestingDataFactory.CreateUniqueData();
-            var duplicatedIdData = UniqueTestingDataFactory.CreateDuplicatedIdData();
-            var duplicatedLastNameData = UniqueTestingDataFactory.CreateDuplicatedLastNameData();
-            var duplicatedNamesData = UniqueTestingDataFactory.CreateDuplicatedNamesData();
+            var fullyValidData = TestingDataFactory.Unique.CreateUniqueData();
+            var duplicatedIdData = TestingDataFactory.Unique.CreateDuplicatedIdData();
+            var duplicatedLastNameData = TestingDataFactory.Unique.CreateDuplicatedLastNameData();
+            var duplicatedNamesData = TestingDataFactory.Unique.CreateDuplicatedNamesData();
 
             Assert.IsTrue(fullyValidData.Collection.BuildValidator().Unique(null, x => x.ID).Validate().IsValid);
             Assert.IsTrue(duplicatedLastNameData.Collection.BuildValidator().Unique(null, x => x.ID).Validate().IsValid);
@@ -81,6 +81,6 @@
 
             list.Add(2);
             Assert.IsFalse(list.BuildValidator().CountGreaterThan(3).Unique().Validate().IsValid);
-        }
+        }        
     }
 }

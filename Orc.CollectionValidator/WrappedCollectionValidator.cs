@@ -66,9 +66,21 @@
             return this;
         }
         
-        public WrappedCollectionValidator<T> ElementValidation<TProp>(Expression<Func<T, TProp>> property, Func<FluentValidation.IRuleBuilder<T, TProp>, FluentValidation.IRuleBuilderOptions<T, TProp>> validationRules)
+        public WrappedCollectionValidator<T> ElementValidation<TProp>(Expression<Func<T, TProp>> property, Func<FluentValidation.IRuleBuilder<T, TProp>, FluentValidation.IRuleBuilderOptions<T, TProp>> validationRule)
         {
-            this.validator.ElementValidation(property, validationRules);
+            this.validator.ElementValidation(property, validationRule);
+            return this;
+        }
+
+        public WrappedCollectionValidator<T> ElementValidation(Func<FluentValidation.IRuleBuilder<ElementWrapper<T>, T>, FluentValidation.IRuleBuilderOptions<ElementWrapper<T>, T>> validationRule)
+        {
+            this.validator.ElementValidation(validationRule);
+            return this;
+        }
+        
+        public WrappedCollectionValidator<T> ElementValidationMessage(string errorMessage)
+        {
+            this.validator.ElementValidationMessage(errorMessage);
             return this;
         }
 

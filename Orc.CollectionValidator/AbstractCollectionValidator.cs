@@ -13,7 +13,7 @@
         /// <summary>
         /// The error message.
         /// </summary>
-        protected readonly string ErrorMessage = "Collection is not valid";
+        protected string ErrorMessage = "Collection is not valid";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractCollectionValidator{T}"/> class.

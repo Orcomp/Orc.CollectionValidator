@@ -1,7 +1,6 @@
 ﻿namespace Orc.CollectionValidator.Test
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,8 +15,8 @@
         [TestMethod]
         public void CanValidateUsingDefaultEqualityComparer()
         {
-            var validTstingData = UniqueTestingDataFactory.CreateSimpleUniqueData();
-            var invalidTestingData = UniqueTestingDataFactory.CreateSimpleNotUniqueData();
+            var validTstingData = TestingDataFactory.Unique.CreateSimpleUniqueData();
+            var invalidTestingData = TestingDataFactory.Unique.CreateSimpleNotUniqueData();
 
             var myStringCollectionValidator = new UniqueValidator<string>();
 
@@ -35,10 +34,10 @@
         [TestMethod]
         public void CanValidateUsingProperties()
         {
-            var fullyValidData = UniqueTestingDataFactory.CreateUniqueData();
-            var duplicatedIdData = UniqueTestingDataFactory.CreateDuplicatedIdData();
-            var duplicatedLastNameData = UniqueTestingDataFactory.CreateDuplicatedLastNameData();
-            var duplicatedNamesData = UniqueTestingDataFactory.CreateDuplicatedNamesData();
+            var fullyValidData = TestingDataFactory.Unique.CreateUniqueData();
+            var duplicatedIdData = TestingDataFactory.Unique.CreateDuplicatedIdData();
+            var duplicatedLastNameData = TestingDataFactory.Unique.CreateDuplicatedLastNameData();
+            var duplicatedNamesData = TestingDataFactory.Unique.CreateDuplicatedNamesData();
 
             var validatorById = new UniqueValidator<GenericParameter>(new Expression<Func<GenericParameter, object>>[]
                                                                           {
@@ -55,8 +54,8 @@
             Assert.IsTrue(equals);
 
             var expectedErrorMessage = "Duplicated items were found in collection";
-            var actuelErrorMessage = result.First().ErrorMessage;
-            Assert.AreEqual(expectedErrorMessage, actuelErrorMessage);
+            var actualErrorMessage = result.First().ErrorMessage;
+            Assert.AreEqual(expectedErrorMessage, actualErrorMessage);
 
             var validatorByNames =
                 new UniqueValidator<GenericParameter>(
@@ -74,8 +73,8 @@
             Assert.IsTrue(equals);
 
             expectedErrorMessage = ErrorMessageText;
-            actuelErrorMessage = result.First().ErrorMessage;
-            Assert.AreEqual(expectedErrorMessage, actuelErrorMessage);
-        }            
+            actualErrorMessage = result.First().ErrorMessage;
+            Assert.AreEqual(expectedErrorMessage, actualErrorMessage);
+        }
     }
 }
