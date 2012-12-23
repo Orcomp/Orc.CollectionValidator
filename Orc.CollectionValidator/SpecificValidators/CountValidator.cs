@@ -1,8 +1,9 @@
-﻿namespace Orc.CollectionValidator
+﻿namespace Orc.CollectionValidator.SpecificValidators
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Orc.CollectionValidator.Interfaces;
 
     public class CountValidator<T> : AbstractCollectionValidator<T>, ICollectionValidator<T>
     {
@@ -10,7 +11,7 @@
         private const string DefaultErrorMessage = "Invalid collection items count";
 
         public CountValidator(Predicate<int> countValidator, string errorMessage = null)
-            : base(string.IsNullOrWhiteSpace(errorMessage) ? DefaultErrorMessage : errorMessage)
+            : base(string.IsNullOrEmpty(errorMessage) ? DefaultErrorMessage : errorMessage)
         {
             this.countValidator = countValidator;
         }

@@ -9,7 +9,7 @@
         private readonly IEnumerable<ValidationResult> validationResults;
 
         public ValidationResults(IEnumerable<ValidationResult> validationResults)
-        {
+        {           
             this.validationResults = validationResults;
         }
 

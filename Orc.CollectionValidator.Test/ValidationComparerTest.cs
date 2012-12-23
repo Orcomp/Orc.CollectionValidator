@@ -1,7 +1,7 @@
 ﻿namespace Orc.CollectionValidator.Test
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Orc.CollectionValidator;
+    using Orc.CollectionValidator.SpecificValidators;
     using Orc.CollectionValidator.Test.Helpers;
 
     [TestClass]

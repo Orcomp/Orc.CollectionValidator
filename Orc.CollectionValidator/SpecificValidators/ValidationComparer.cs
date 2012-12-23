@@ -1,4 +1,4 @@
-﻿namespace Orc.CollectionValidator
+﻿namespace Orc.CollectionValidator.SpecificValidators
 {
     using System;
     using System.Collections.Generic;
@@ -59,9 +59,12 @@
 
             var properties = propExpressions.Select(x => x.GetProppertyInfo()).ToArray();
             this.equals = (x, y) => !(from propertyInfo in properties
-                                      let xVal = propertyInfo.GetValue(x, null)
-                                      let yVal = propertyInfo.GetValue(y, null)
-                                      where (xVal != null && !xVal.Equals(yVal)) || (yVal != null && !yVal.Equals(xVal))
+                                      let xVal = x == null ? null : propertyInfo.GetValue(x, null)
+                                      let yVal = y == null ? null : propertyInfo.GetValue(y, null)
+                                      where
+                                          (x == null && y != null) || (x != null && y == null)
+                                          || (xVal != null && !xVal.Equals(yVal))
+                                          || (yVal != null && !yVal.Equals(xVal))
                                       select xVal).Any();
         }
 

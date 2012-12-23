@@ -4,20 +4,31 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using FluentValidation;
+    using Orc.CollectionValidator.Interfaces;
+    using Orc.CollectionValidator.SpecificValidators;
 
     /// <summary>
     /// Main collection validation class.
     /// </summary>
     /// <typeparam name="T">Type of collection elements.
     /// </typeparam>
-    public class CollectionValidator<T> : ICollectionValidator<T>
+    public class CollectionValidator<T> : ICollectionValidator<T>, IFluentCollectionValidator<CollectionValidator<T>, T>
     {
         /// <summary>
         /// The list of validators.
         /// </summary>
         private readonly IList<ICollectionValidator<T>> validators = new List<ICollectionValidator<T>>();
-        
- 
+
+        private readonly ElementValidator<T> elementValidator;
+
+
+        public CollectionValidator()
+        {
+            this.elementValidator = new ElementValidator<T>();
+            this.validators.Add(this.elementValidator);
+        }       
+
         /// <summary>
         /// Adds UniqueValidator to validation sequence.
         /// </summary>
@@ -69,6 +80,41 @@
             return this;
         }
 
+        public CollectionValidator<T> Single()
+        {
+            this.validators.Add(new CountValidator<T>(x => x == 1));
+            return this;
+        }
+
+        public CollectionValidator<T> ElementValidation(AbstractValidator<T> validator)
+        {
+
+            this.elementValidator.AddValidator(validator);
+
+            return this;
+        }
+
+        public CollectionValidator<T> ElementValidation<TProp>(Expression<Func<T, TProp>> property, Func<IRuleBuilder<T, TProp>, IRuleBuilderOptions<T, TProp>> validationRule)
+        {
+            validationRule(this.elementValidator.CreatePropertyRule(property));
+
+            return this;
+        }
+
+        public CollectionValidator<T> ElementValidation(Func<IRuleBuilder<ElementWrapper<T>, T>, IRuleBuilderOptions<ElementWrapper<T>, T>> validationRule)
+        {
+            validationRule(this.elementValidator.CreateRule());
+
+            return this;
+        }
+
+        public CollectionValidator<T> ElementValidationMessage(string errorMessage)
+        {
+            this.elementValidator.SetErrorMessage(errorMessage);
+
+            return this;
+        }
+
         public ValidationResults Validate(IEnumerable<T> collection)
         {
             if (validators.Count == 0)
@@ -79,6 +125,6 @@
                         .SelectMany(varRes => varRes)
                         .ToArray());
 
-        }        
+        }
     }
 }

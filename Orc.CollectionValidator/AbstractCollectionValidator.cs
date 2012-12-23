@@ -1,6 +1,7 @@
 ﻿namespace Orc.CollectionValidator
 {
     using System.Collections.Generic;
+    using Orc.CollectionValidator.Interfaces;
 
     /// <summary>
     /// Base class for all collection validators
@@ -12,7 +13,7 @@
         /// <summary>
         /// The error message.
         /// </summary>
-        protected readonly string ErrorMessage = "Collection is not valid";
+        protected string ErrorMessage = "Collection is not valid";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractCollectionValidator{T}"/> class.
@@ -22,7 +23,7 @@
         /// </param>
         protected AbstractCollectionValidator(string errorMessage = null)
         {
-            if (!string.IsNullOrWhiteSpace(errorMessage))
+            if (!string.IsNullOrEmpty(errorMessage))
             {
                 this.ErrorMessage = errorMessage;
             }

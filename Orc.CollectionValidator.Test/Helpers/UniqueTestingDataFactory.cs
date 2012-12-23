@@ -1,13 +1,16 @@
 ﻿namespace Orc.CollectionValidator.Test.Helpers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
-    public static class UniqueTestingDataFactory
+    public class UniqueTestingDataFactory
     {
-        public static UniqueTestingData<GenericParameter> CreateUniqueData()
+        private UniqueTestingDataFactory()
+        {
+        }
+
+        public static readonly UniqueTestingDataFactory Instance = new UniqueTestingDataFactory();
+
+        public UniqueTestingData<GenericParameter> CreateUniqueData()
         {
             var collection = new List<GenericParameter>
                                       {
@@ -26,7 +29,7 @@
             };
         }
 
-        public static UniqueTestingData<GenericParameter> CreateDuplicatedIdData()
+        public UniqueTestingData<GenericParameter> CreateDuplicatedIdData()
         {
             var collection = new List<GenericParameter>
                                       {
@@ -45,7 +48,7 @@
                        };
         }
 
-        public static UniqueTestingData<GenericParameter> CreateDuplicatedNamesData()
+        public UniqueTestingData<GenericParameter> CreateDuplicatedNamesData()
         {
             var collection = new List<GenericParameter>
                                       {
@@ -64,7 +67,7 @@
             };
         }
 
-        public static UniqueTestingData<GenericParameter> CreateDuplicatedLastNameData()
+        public UniqueTestingData<GenericParameter> CreateDuplicatedLastNameData()
         {
             var collection = new List<GenericParameter>
                                       {
@@ -83,7 +86,7 @@
             };
         }
 
-        public static UniqueTestingData<string> CreateSimpleUniqueData()
+        public UniqueTestingData<string> CreateSimpleUniqueData()
         {
             return new UniqueTestingData<string>
                        {
@@ -92,7 +95,7 @@
                        };
         }
 
-        public static UniqueTestingData<string> CreateSimpleNotUniqueData()
+        public UniqueTestingData<string> CreateSimpleNotUniqueData()
         {
             return new UniqueTestingData<string>
             {
