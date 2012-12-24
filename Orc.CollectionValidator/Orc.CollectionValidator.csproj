@@ -49,7 +49,7 @@
     <Compile Include="AbstractCollectionValidator.cs" />
     <Compile Include="SpecificValidators\ElementValidator.cs" />
     <Compile Include="SpecificValidators\CountValidator.cs" />
-    <Compile Include="ElrmentWrapper.cs" />
+    <Compile Include="ElementWrapper.cs" />
     <Compile Include="SpecificValidators\ItemValidationResult.cs" />
     <Compile Include="WrappedCollectionValidator.cs" />
     <Compile Include="Interfaces\IWrappedValidator.cs" />
