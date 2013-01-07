@@ -75,7 +75,7 @@
         /// <returns>
         /// The <see cref="PropertyInfo"/>.
         /// </returns>
-        internal static PropertyInfo GetProppertyInfo<T, TProp>(this Expression<Func<T, TProp>> propertyExpression)
+        internal static PropertyInfo GetPropertyInfo<T, TProp>(this Expression<Func<T, TProp>> propertyExpression)
         {
             MemberExpression body;
             var expression = propertyExpression.Body as UnaryExpression;

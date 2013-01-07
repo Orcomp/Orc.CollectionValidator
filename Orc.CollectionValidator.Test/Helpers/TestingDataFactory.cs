@@ -10,6 +10,14 @@
             }
         }
 
+		public static OrderedTestingDataFactory Ordered
+		{
+			get
+			{
+				return OrderedTestingDataFactory.Instance;
+			}
+		}
+
         public static ElementValidationTestingDataFactory ElementValidation
         {
             get

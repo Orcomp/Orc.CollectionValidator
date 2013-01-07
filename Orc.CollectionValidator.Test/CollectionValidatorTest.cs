@@ -155,5 +155,54 @@
             Assert.IsTrue(validator.Validate(validCollection).IsValid);
             Assert.IsFalse(validator.Validate(invalidCollection).IsValid);
         }
+
+
+		[TestMethod]
+		public void CanValidateAggregate()
+		{
+			var single = new[] { 1,2,3 };
+
+			var validator = new CollectionValidator<int>().AggregateEqualTo((x) => x, (collection) => collection.Sum(), 6);
+
+		}
+
+		[TestMethod]
+		public void SumEqualTo()
+		{
+			var single = new[] { 1, 2, 3 };
+			var validator = new CollectionValidator<int>().SumEqualTo((x) => x, 6);
+		}
+
+		[TestMethod]
+		public void SumGreaterThanEqualTo()
+		{
+			var single = new[] { 1, 2, 3 };
+			var validator = new CollectionValidator<int>().SumEqualTo((x) => x, 6);
+		}
+
+
+		[TestMethod]
+		public void SumGreaterThan()
+		{
+			var single = new[] { 1, 2, 3 };
+			var validator = new CollectionValidator<int>().SumEqualTo((x) => x, 5);
+		}
+
+
+		[TestMethod]
+		public void TestExtensionSimple()
+		{
+			var single = new[] { 1, 2, 3 };
+			var validator = new CollectionValidator<int>().SumEqualTo(5);
+		}
+
+		[TestMethod]
+		public void TestExtensionSimple2()
+		{
+			var single = new[] { 0.1M, 0.2M, 0.3M };
+			var validator = new CollectionValidator<decimal>().SumEqualTo(0.6M);
+		}
+
+
     }
 }

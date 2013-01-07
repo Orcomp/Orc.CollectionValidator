@@ -12,7 +12,7 @@
     public class ElementValidator<T> : AbstractCollectionValidator<T>
     {
         public ElementValidator(string errorMessage = null)
-            : base(string.IsNullOrEmpty(errorMessage) ? "One ore more items of collections contained fail data." : errorMessage)
+            : base(string.IsNullOrEmpty(errorMessage) ? "One or more items of collections contained failed data." : errorMessage)
         {
         
         }
@@ -21,25 +21,23 @@
 
         private readonly AbstractValidator<T> propertyValidator = new InlineValidator<T>();
 
-        private readonly AbstractValidator<ElementWrapper<T>> itemValidator = new InlineValidator<ElementWrapper<T>>(); 
-      
-        public override ValidationResults Validate(IEnumerable<T> collection)
-        {
-            var result = new ItemValidationResult
-                             {
-                                 ErrorMessage = this.ErrorMessage,
-                                 Errors =
-                                     collection.Select(
-                                         (item, i) =>
-                                         new KeyValuePair<int, IEnumerable<ValidationFailure>>(
-                                             i, this.ValidateItem(item)))
-                                               .Where(x => x.Value.Any())
-                                               .ToDictionary(x => x.Key, x => x.Value.ToArray())
-                             };
-            return
-                new ValidationResults(
-                    result.Errors.Count == 0 ? Enumerable.Empty<ValidationResult>() : new ValidationResult[] { result });
-        }
+        private readonly AbstractValidator<ElementWrapper<T>> itemValidator = new InlineValidator<ElementWrapper<T>>();
+
+		public override ValidationResults Validate(IEnumerable<T> collection)
+		{
+			var result = new ItemValidationResult
+							 {
+								 ErrorMessage = this.ErrorMessage,
+								 Errors =
+									 collection.Select(
+										 (item, i) =>
+										 new KeyValuePair<int, IEnumerable<ValidationFailure>>(
+											 i, this.ValidateItem(item)))
+											   .Where(x => x.Value.Any())
+											   .ToDictionary(x => x.Key, x => x.Value.ToArray())
+							 };
+			return result.Errors.Count == 0 ? ValidationResults.Success : new ValidationResults(new ValidationResult[] { result });
+		}
 
         public IRuleBuilder<T, TProp> CreatePropertyRule<TProp>(System.Linq.Expressions.Expression<Func<T, TProp>> property)
         {

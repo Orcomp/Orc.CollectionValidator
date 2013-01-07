@@ -47,14 +47,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractCollectionValidator.cs" />
+    <Compile Include="Extensions\ByteCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\CharCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\ULongCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\LongCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\UShortCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\UIntCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\DecimalCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\ShortCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\FloatCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\DoubleCollectionValidatorExtensions.cs" />
+    <Compile Include="Extensions\IntCollectionValidatorExtensions.cs" />
+    <Compile Include="SpecificValidators\AggregateValidationResult.cs" />
     <Compile Include="SpecificValidators\ElementValidator.cs" />
     <Compile Include="SpecificValidators\CountValidator.cs" />
     <Compile Include="ElementWrapper.cs" />
     <Compile Include="SpecificValidators\ItemValidationResult.cs" />
+    <Compile Include="SpecificValidators\OrderedValidator.cs" />
+    <Compile Include="SpecificValidators\UniqueValidationResult.cs" />
     <Compile Include="WrappedCollectionValidator.cs" />
     <Compile Include="Interfaces\IWrappedValidator.cs" />
     <Compile Include="Interfaces\IFluentCollectionValidator.cs" />
-    <Compile Include="SpecificValidators\UniqueValidationResult.cs" />
+    <Compile Include="SpecificValidators\AggregateValidator.cs" />
     <Compile Include="Utilits\Extensions.cs" />
     <Compile Include="SpecificValidators\ValidationComparer.cs" />
     <Compile Include="CollectionValidator.cs" />
@@ -66,6 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="temp\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

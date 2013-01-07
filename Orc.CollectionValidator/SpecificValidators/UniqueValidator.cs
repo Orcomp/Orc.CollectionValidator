@@ -60,7 +60,7 @@
             }
 
             return allDuplicates.Count == 0
-                       ? new ValidationResults(Enumerable.Empty<ValidationResult>())
+					   ? ValidationResults.Success
                        : new ValidationResults(
                              new[]
                                  {
