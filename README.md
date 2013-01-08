@@ -77,12 +77,7 @@ The methods available are:
 
 Why Validate Collections?
 =========================
-Validation is an important aspect of software quality control and design-by-contract. This libary gives developers an easy way to enforce arbitrary conditions on collections (or aggregated values derived from collections) and to chain them together in a fluent-style interface. For example, a method may require a collection of numbers to be ordered and contain a minimum value greater than a known constant. It may also require that the standard deviation of those numbers maintain a certain condition. More complex scenarios using properties from objects of the collections can also be validated using arbitrary aggregator functions specified by the client code.
-
-A typical production scenario may utilize Orc.CollectionValidator for
-	- easy validation of collections within Unit Tests
-	- easy validation of arguments in code contracts
-
+Validation is an important aspect of software quality control and design-by-contract. This libary gives developers an easy way to enforce arbitrary conditions on collections (or aggregated values derived from collections) and to chain them together in a fluent-style interface. For example, a method may require a collection of numbers to be ordered and contain a minimum value greater than a known constant. It may also require that the standard deviation of those numbers maintain a certain condition. More complex scenarios using properties from objects of the collections can also be validated using arbitrary aggregator functions specified by the client code. A typical production scenario may utilize Orc.CollectionValidator for easy validation of collections within Unit Tests and/or within code contracts.
 	
 Validating Collections
 ======================
@@ -123,7 +118,7 @@ Validating
 
 Once you've constructed your validator, you need to actually validate a collection. This is easily done as follows:
 
-	var validator =  new CollectionValidator<MyTime>().chained.validations.here();
+	var validator =  new CollectionValidator<MyType>().chained.validations.here();
 	var results = validator.Validate(myCollectionHere)
 
 You can test your results for success or failure via the
