@@ -88,5 +88,138 @@
         {
             return this.validator.Validate(this.collection);
         }
-    }
+
+
+		public WrappedCollectionValidator<T> AggregateCondition(Func<IEnumerable<T>, T> aggregator, Predicate<T> condition, string errorMessage = null)
+		{
+			this.validator.AggregateCondition(aggregator, condition, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> AggregateCondition<K>(Func<T, K> selector, Func<IEnumerable<K>, K> aggregator, Predicate<K> condition, string errorMessage = null)
+		{
+			this.validator.AggregateCondition(selector, aggregator, condition, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> AggregateEqualTo(Func<T, double> selector, Func<IEnumerable<double>, double> aggregator, double value, string errorMessage = null)
+		{
+			this.validator.AggregateEqualTo(selector, aggregator, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> AggregateGreaterThanOrEqualTo(Func<T, double> selector, Func<IEnumerable<double>, double> aggregator, double value, string errorMessage = null)
+		{
+			this.validator.AggregateGreaterThanOrEqualTo(selector, aggregator, value,  errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> AggregateGreaterThan(Func<T, double> selector, Func<IEnumerable<double>, double> aggregator, double value, string errorMessage = null)
+		{
+			this.validator.AggregateGreaterThan(selector, aggregator, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> AggregateLessThanOrEqualTo(Func<T, double> selector, Func<IEnumerable<double>, double> aggregator, double value, string errorMessage = null)
+		{
+			this.validator.AggregateLessThanOrEqualTo(selector, aggregator, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> AggregateLessThan(Func<T, double> selector, Func<IEnumerable<double>, double> aggregator, double value, string errorMessage = null)
+		{
+			this.validator.AggregateLessThan(selector, aggregator, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> SumEqualTo(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.SumEqualTo(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> SumGreaterThanOrEqualTo(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.SumGreaterThanOrEqualTo(selector,  value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> SumGreaterThan(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.SumGreaterThan(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> SumLessThanOrEqualTo(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.SumLessThanOrEqualTo(selector,  value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> SumLessThan(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.SumLessThan(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MinEqualTo(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MinEqualTo(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MinGreaterThanOrEqualTo(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MinGreaterThanOrEqualTo(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MinGreaterThan(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MinGreaterThan(selector,  value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MinLessThanOrEqualTo(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MinLessThanOrEqualTo(selector,  value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MinLessThan(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MinLessThan(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MaxEqualTo(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MaxEqualTo(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MaxGreaterThanOrEqualTo(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MaxGreaterThanOrEqualTo(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MaxGreaterThan(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MaxGreaterThan(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MaxLessThanOrEqualTo(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MaxLessThanOrEqualTo(selector, value, errorMessage);
+			return this;
+		}
+
+		public WrappedCollectionValidator<T> MaxLessThan(Func<T, double> selector, double value, string errorMessage = null)
+		{
+			this.validator.MaxLessThan(selector, value, errorMessage);
+			return this;
+		}
+	}
 }

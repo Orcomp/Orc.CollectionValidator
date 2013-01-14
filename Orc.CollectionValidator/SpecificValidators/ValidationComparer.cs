@@ -4,9 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using Orc.CollectionValidator.Utilits;
 
-    /// <summary>
+	/// <summary>
     /// Defines methods to support the comparison of objects for equality.
     /// </summary>
     /// <typeparam name="T">The type of objects to compare.
@@ -50,14 +49,14 @@
         /// <param name="propExpressions">
         /// Lambda expressions described the properties to compare.
         /// </param>
-        public ValidationComparer(params Expression<Func<T, object>>[] propExpressions)
+		public ValidationComparer(params Expression<Func<T, object>>[] propExpressions)
         {
             if (propExpressions == null)
             {
                 throw new ArgumentNullException("propExpressions");
             }
 
-            var properties = propExpressions.Select(x => x.GetProppertyInfo()).ToArray();
+            var properties = propExpressions.Select(x => x.GetPropertyInfo()).ToArray();
             this.equals = (x, y) => !(from propertyInfo in properties
                                       let xVal = x == null ? null : propertyInfo.GetValue(x, null)
                                       let yVal = y == null ? null : propertyInfo.GetValue(y, null)

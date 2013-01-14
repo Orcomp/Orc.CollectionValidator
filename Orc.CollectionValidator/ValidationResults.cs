@@ -13,6 +13,23 @@
             this.validationResults = validationResults;
         }
 
+
+		public static ValidationResults Success {
+			get {
+				return new ValidationResults(Enumerable.Empty<ValidationResult>());
+			}
+		}
+
+		public static ValidationResults Failed(params string[] errors)
+		{
+			return Failed(errors.Select(error => new ValidationResult{ ErrorMessage = error }));
+		}
+
+		public static ValidationResults Failed(IEnumerable<ValidationResult> errors)
+		{
+			return new ValidationResults(errors);
+		}
+
         public bool IsValid
         {
             get

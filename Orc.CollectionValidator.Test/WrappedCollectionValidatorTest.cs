@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Orc.CollectionValidator.Test.Helpers;
-    using Orc.CollectionValidator.Utilits;
 
     [TestClass]
     public class WrappedCollectionValidatorTest

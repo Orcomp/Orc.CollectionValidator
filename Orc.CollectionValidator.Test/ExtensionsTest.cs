@@ -6,7 +6,6 @@
     using System.Linq.Expressions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Orc.CollectionValidator.Test.Helpers;
-    using Orc.CollectionValidator.Utilits;
 
     [TestClass]
     public class ExtensionsTest
@@ -46,7 +45,7 @@
             var obj = new GenericParameter();
             var expected = obj.GetType().GetProperty("ID");
             Expression<Func<GenericParameter, object>> expression = x => x.ID;
-            var actual = expression.GetProppertyInfo();
+            var actual = expression.GetPropertyInfo();
 
             Assert.AreEqual(expected, actual);
         }

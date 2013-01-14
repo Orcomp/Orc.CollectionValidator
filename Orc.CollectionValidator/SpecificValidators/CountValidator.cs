@@ -20,7 +20,7 @@
         {
             return !this.countValidator(collection.Count())
                        ? new ValidationResults(new[] { new ValidationResult { ErrorMessage = this.ErrorMessage } })
-                       : new ValidationResults(Enumerable.Empty<ValidationResult>());
+                       : ValidationResults.Success;
         }
     }
 }
