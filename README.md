@@ -74,6 +74,7 @@ The methods available are:
 
 		Single();
 
+For more detailed usage please have a look at the unit tests.
 
 Why Validate Collections?
 =========================
@@ -150,7 +151,7 @@ Extending Orc.CollectionValidator is straightfoward. The main facade class that 
 
 	Orc.CollectionValidator.CollectionValidator 
 
-This class provides the fluent-style methods that can be chained together to validate a collection. Before writing your own validator, see if you can overload or reusing any of those methods. Also consider reusing the general-purpose AggregateValidator as it will likely address your requirement. If you need to write your own custom specific validator then you will need to create it in the
+This class provides the fluent-style methods that can be chained together to validate a collection. Before writing your own validator, see if you can overload or reuse any of those methods. Also consider reusing the general-purpose AggregateValidator as it will likely address your requirement. If you need to write your own custom specific validator then you will need to create it in the
 
 	Orc.CollectionValidator\SpecificValidators 
 
@@ -179,10 +180,12 @@ See the class diagram for more information.
 Class Diagram
 =============
 
-![Alt text](https://raw.github.com/HermanSchoenfeld/Orc.CollectionValidator/master/ClassDiagram.png)
+![Alt text](https://raw.github.com/Orcomp/Orc.CollectionValidator/master/ClassDiagram.png)
 
 NuGet
 =====		
 		
-NuGet packages are available - the package ID is <b>FluentValidation</b>
+NuGet packages required - <b>FluentValidation</b>
+
+Currently Orc.CollectionValidator is not on NuGet but we will have it up soon.
 
