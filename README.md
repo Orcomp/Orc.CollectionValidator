@@ -179,7 +179,7 @@ See the class diagram for more information.
 Class Diagram
 =============
 
-![Alt text](/ClassDiagram.png)
+![Alt text](https://raw.github.com/HermanSchoenfeld/Orc.CollectionValidator/master/ClassDiagram.png)
 
 NuGet
 =====		
