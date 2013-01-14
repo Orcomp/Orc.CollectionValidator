@@ -6,7 +6,6 @@
     using System.Linq.Expressions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Orc.CollectionValidator.Test.Helpers;
-    using Orc.CollectionValidator.Utilits;
 
     [TestClass]
     public class ExtensionsTest

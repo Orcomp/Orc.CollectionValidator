@@ -77,11 +77,11 @@ The methods available are:
 
 Why Validate Collections?
 =========================
-Validation is an important aspect of software quality control and design-by-contract. This libary gives developers an easy way to enforce arbitrary conditions on collections (or aggregated values derived from collections) and to chain them together in a fluent-style interface. For example, a method may require a collection of numbers to be ordered and contain a minimum value greater than a known constant. It may also require that the standard deviation of those numbers maintain a certain condition. More complex scenarios using properties from objects of the collections can also be validated using arbitrary aggregator functions specified by the client code. A typical production scenario may utilize Orc.CollectionValidator for easy validation of collections within Unit Tests and/or within code contracts.
+Validation is an important aspect of software quality control and design-by-contract. This libary provides developers an easy way to enforce arbitrary conditions on collections or (aggregated values derived from collection items) and to chain them together via a fluent-style interface. For example, a method may require a collection of numbers to be ordered and contain a minimum value greater than a known constant. It may also require that the standard deviation of those numbers maintain a certain condition. More complex scenarios composed of properties from items within the collection can also be validated using arbitrary aggregator functions specified by the client code. A typical production scenario may use Orc.CollectionValidator within Unit Tests, code contracts and/or argument validation.
 	
 Validating Collections
 ======================
-Validation of collections occurs through the use of the CollectionValidator facade. This class is constructed using an easy-to-use Fluent inteface which allows you to chain specific validations together.
+Validation of collections occurs via the CollectionValidator facade. This class provides an easy-to-use Fluent interface that allows you to chain your specific validations together.
 
 For example 
 
@@ -103,11 +103,11 @@ Validating Items
 
 Validation of items uses the FluentValidation library which is integrated into the Orc.CollectionValidator library. You can access FluentValidation via the ElementValidation facade method (or ElementValidator specific validator).
 
-For example, testing whether all the numbers within a list of numbers is prime can be done like this
+For example, testing whether all the numbers are prime:
 
 	var validator =  new CollectionValidator.ElementValidation(x => IsPrime(x));
 		
-Suppose the collection was composed of Person object whom who's ages you'd like to be prime
+Suppose the collection was composed of Person object whom who's ages you'd like to be prime:
 
 	var validator = 
 		new CollectionValidator.ElementValidation(person => person.Age, age => IsPrime(age));
@@ -121,7 +121,7 @@ Once you've constructed your validator, you need to actually validate a collecti
 	var validator =  new CollectionValidator<MyType>().chained.validations.here();
 	var results = validator.Validate(myCollectionHere)
 
-You can test your results for success or failure via the
+You can test your results via the
 
 	results.IsValid 
 	
@@ -135,7 +135,7 @@ and get result error message
 
 	result.ErrorMessage
 
-Some specific validations return a subclassed ValidationResult which contains additional information. For example the UniqueValidationResult contains the property 'DuplicatedItems'.
+Some specific validations return a sub-classed ValidationResult which contains additional information. For example the UniqueValidationResult contains the property 'DuplicatedItems'.
 
 	if (result is UniqueValidationResults)
 		var duplicates = ((UniqueValidationResults)result).DuplicatedItems
@@ -150,7 +150,7 @@ Extending Orc.CollectionValidator is straightfoward. The main facade class that 
 
 	Orc.CollectionValidator.CollectionValidator 
 
-This class provides the fluent-style methods that can be chained together to validate a collection. Before writing your own validator, see if you can overload any of those methods. Also consider overloading the general-purpose AggregateValidator as it will likely address your requirement. If you need to write your own custom specific validator you will need to create it in the
+This class provides the fluent-style methods that can be chained together to validate a collection. Before writing your own validator, see if you can overload or reusing any of those methods. Also consider reusing the general-purpose AggregateValidator as it will likely address your requirement. If you need to write your own custom specific validator then you will need to create it in the
 
 	Orc.CollectionValidator\SpecificValidators 
 
@@ -171,11 +171,18 @@ Your specific validator will need to return validation result. If your validator
 
 	Orc.CollectionValidator.ValidationResult
 	
-class and the additional properties for your result.
+class and the additional properties for your result. 
 
+See the class diagram for more information.
+
+
+Class Diagram
+=============
+
+![Alt text](/ClassDiagram.png)
 
 NuGet
 =====		
 		
-NuGet packages are available - the package ID is FluentValidation
+NuGet packages are available - the package ID is <b>FluentValidation</b>
 

@@ -195,7 +195,7 @@
 		[TestMethod]
 		public void TestExtensionSimple()
 		{
-			var collection = new[] { 1, 2, 3 };
+			var collection = new[] { 1, 2, 3, -1 };
 			var validator = new CollectionValidator<int>().SumEqualTo(5);
 			Assert.IsTrue(validator.Validate(collection).IsValid);
 		}
@@ -203,28 +203,12 @@
 		[TestMethod]
 		public void TestExtensionSimple2()
 		{
-			var collection = new[] { 0.1M, 0.2M, 0.3M };
-			var validator = new CollectionValidator<decimal>().SumEqualTo(0.6M);
+			var collection = new[] { 1.0M, 2.0M, 3.0M };
+			var validator = new CollectionValidator<decimal>().SumEqualTo(6.0M);
 			Assert.IsTrue(validator.Validate(collection).IsValid);
 		}
 
 
-		[TestMethod]
-		public void TestFluentSimple()
-		{
-			var collection = new[] { 2, 4, 6, 8 };
-
-			var validator =
-				new CollectionValidator<int>()
-					.MinEqualTo(2)
-					.MaxEqualTo(8)
-					.SumEqualTo(20)
-					.Ordered();
-
-			if (!validator.Validate(collection).IsValid)
-				throw ...
-
-		}
 
     }
 }

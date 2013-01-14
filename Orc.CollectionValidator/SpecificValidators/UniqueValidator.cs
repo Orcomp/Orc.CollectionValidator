@@ -4,9 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using Orc.CollectionValidator.Utilits;
 
-    public class UniqueValidator<T> : AbstractCollectionValidator<T>
+	public class UniqueValidator<T> : AbstractCollectionValidator<T>
     {
         private readonly IEqualityComparer<T> comparer;
         private const string DefaultErrorMessage = "Duplicated items were found in collection";

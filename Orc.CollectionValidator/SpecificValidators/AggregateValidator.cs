@@ -1,12 +1,9 @@
-﻿using Orc.CollectionValidator.Utilits;
-
-namespace Orc.CollectionValidator.SpecificValidators
+﻿namespace Orc.CollectionValidator.SpecificValidators
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using Orc.CollectionValidator.Interfaces;
-	using System.Linq.Expressions;
 
 	public class AggregateValidator<T, K> : AbstractCollectionValidator<T>, ICollectionValidator<T>
 	{

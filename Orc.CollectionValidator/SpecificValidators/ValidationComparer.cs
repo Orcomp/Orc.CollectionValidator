@@ -4,9 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using Orc.CollectionValidator.Utilits;
 
-    /// <summary>
+	/// <summary>
     /// Defines methods to support the comparison of objects for equality.
     /// </summary>
     /// <typeparam name="T">The type of objects to compare.
