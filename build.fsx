@@ -11,21 +11,18 @@ open Fake.MSTest
 // --------------------------------------------------------------------------------------
 // Definitions
 
-let srcDir  = @".\"
+let srcDir  = @".\src\"
 let deploymentDir  = @".\deployment\"
-let nugetPath = @".\.nuget\nuget.exe"
+let nugetPath = srcDir + @"\.nuget\nuget.exe"
 let nugetAccessKey = ""
 let version = "1.0.0.0"
 
-let outputDir = @".\Orc.CollectionValidator\bin\"
-let outputDebugDir = outputDir + "debug"
-let outputReleaseDir = outputDir + "release"
-let testDir = srcDir + @"tests\"
-let testOutputDir = srcDir + @"Orc.CollectionValidator.Test\bin\"
+let outputDir = @".\output\"
+let outputBinDir = outputDir + @"bin\"
+let outputTestDir = outputDir + @"tests\"
+let testResultsDir = outputDir + @"TestResults\"
 
-let outputDebugFiles = !! (outputDebugDir + @"\**\*.*")
-                            -- "*.vshost.exe"
-let outputReleaseFiles = !! (outputReleaseDir + @"\**\*.*")
+let outputBinFiles = !! (outputBinDir + @"\**\*.*")
                             -- "*.vshost.exe"
 
 let tests = srcDir + @"\**\*.Test.csproj" 
@@ -43,10 +40,8 @@ Target "CleanPackagesDirectory" (fun _ ->
 )
 
 Target "DeleteOutputFiles" (fun _ ->
-    !! (outputDebugDir + @"\**\*.*")
-        ++ (outputReleaseDir + @"\**\*.*")
-        ++ (testDir + @"\**\*.*")
-        ++ (testOutputDir + @"\**\*.*")
+    !! (outputBinDir + @"\**\*.*")
+        ++ (outputTestDir + @"\**\*.*")
         -- "\**\*.vshost.exe"
     |> DeleteFiles
 )
@@ -61,8 +56,6 @@ Target "DeleteOutputDirectories" (fun _ ->
 
 // --------------------------------------------------------------------------------------
 // Build projects
-
-RestorePackages()
 
 Target "UpdateAssemblyVersion" (fun _ ->
       let solutionAssemblyInfo = srcDir + "Orc.CollectionValidator\Properties\AssemblyInfo.cs"
@@ -90,14 +83,14 @@ Target "BuildTests" (fun _ ->
 
 Target "RunTests" (fun _ ->
     ActivateFinalTarget "CloseMSTestRunner"
-    CleanDir testDir
-    CreateDir testDir
+    CleanDir testResultsDir
+    CreateDir testResultsDir
 
-    !! (testOutputDir + @"\**\*.Test.dll") 
+    !! (outputDir + @"\**\*.Test.dll") 
       |> MSTest (fun p ->
                   { p with
                      TimeOut = TimeSpan.FromMinutes 20.
-                     ResultsDir = testDir})
+                     ResultsDir = testResultsDir})
 )
 
 FinalTarget "CloseMSTestRunner" (fun _ ->  
@@ -109,7 +102,7 @@ FinalTarget "CloseMSTestRunner" (fun _ ->
 
 Target "NuGet" (fun _ ->
     let nugetAccessPublishKey = getBuildParamOrDefault "nugetkey" nugetAccessKey
-    let getOutputFile ext = sprintf @"%s\Orc.CollectionValidator.%s" outputReleaseDir ext
+    let getOutputFile ext = sprintf @"%s\Orc.CollectionValidator.%s" outputBinDir ext
     let libraryFiles = !! (getOutputFile "dll")
                         ++ (getOutputFile "xml")
     

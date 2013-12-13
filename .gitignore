@@ -109,3 +109,4 @@ UpgradeLog*.XML
 
 # FAKE build
 tools/FAKE
+output/
