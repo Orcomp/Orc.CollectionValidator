@@ -107,7 +107,7 @@ Target "NuGet" (fun _ ->
                         ++ (getOutputFile "xml")
     
     let libraryDependencies =
-                    ["FluentValidation", GetPackageVersion "./packages/" "FluentValidation"]
+                    ["FluentValidation", GetPackageVersion (srcDir + "/packages/") "FluentValidation"]
 
     let workingDeploymentDir = deploymentDir + @"packages\"
     let dllDeploymentDir = workingDeploymentDir + @"lib\NET40\"
