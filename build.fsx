@@ -12,6 +12,7 @@ open Fake.MSTest
 // Definitions
 
 let srcDir  = @".\"
+let deploymentDir  = @".\deployment\"
 let nugetPath = @".\.nuget\nuget.exe"
 let nugetAccessKey = ""
 let version = "1.0.0.0"
@@ -36,6 +37,10 @@ let otherProjects = !! allProjects
 
 // --------------------------------------------------------------------------------------
 // Clean build results
+
+Target "CleanPackagesDirectory" (fun _ ->
+    CleanDirs [(deploymentDir + "packages");]
+)
 
 Target "DeleteOutputFiles" (fun _ ->
     !! (outputDebugDir + @"\**\*.*")
@@ -102,12 +107,54 @@ FinalTarget "CloseMSTestRunner" (fun _ ->
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
+Target "NuGet" (fun _ ->
+    let nugetAccessPublishKey = getBuildParamOrDefault "nugetkey" nugetAccessKey
+    let getOutputFile ext = sprintf @"%s\Orc.CollectionValidator.%s" outputReleaseDir ext
+    let libraryFiles = !! (getOutputFile "dll")
+                        ++ (getOutputFile "xml")
+    
+    let libraryDependencies =
+                    ["FluentValidation", GetPackageVersion "./packages/" "FluentValidation"]
+
+    let workingDeploymentDir = deploymentDir + @"packages\"
+    let dllDeploymentDir = workingDeploymentDir + @"lib\NET40\"
+    let getNupkgFile = sprintf "%s\Orc.CollectionValidator.%s.nupkg" dllDeploymentDir version
+    let getNuspecFile = sprintf "%stemplates\Orc.CollectionValidator.nuspec" deploymentDir
+
+    let preparePackage filesToPackage = 
+        CreateDir workingDeploymentDir
+        CreateDir dllDeploymentDir
+        CopyFiles dllDeploymentDir filesToPackage
+
+    let cleanPackage name = 
+        MoveFile workingDeploymentDir getNupkgFile
+        DeleteDir (workingDeploymentDir + "lib")
+
+    let doPackage dependencies =   
+        NuGet (fun p -> 
+            {p with
+                Version = version
+                ToolPath = nugetPath
+                OutputPath = dllDeploymentDir
+                WorkingDir = workingDeploymentDir
+                Dependencies = dependencies
+                Publish = not (String.IsNullOrEmpty nugetAccessPublishKey)
+                AccessKey = nugetAccessPublishKey })
+                getNuspecFile
+    
+    let doAll files depenencies =
+        preparePackage files
+        doPackage depenencies
+        cleanPackage ""
+
+    doAll libraryFiles libraryDependencies
+)
 
 // --------------------------------------------------------------------------------------
 // Combined targets
 
 Target "Clean" DoNothing
-"DeleteOutputFiles" ==> "DeleteOutputDirectories" ==> "Clean"
+"CleanPackagesDirectory" ==> "DeleteOutputFiles" ==> "DeleteOutputDirectories" ==> "Clean"
 
 Target "Build" DoNothing
 "UpdateAssemblyVersion" ==> "BuildOtherProjects" ==> "Build"
@@ -116,9 +163,12 @@ Target "Tests" DoNothing
 "BuildTests" ==> "RunTests" ==> "Tests"
 
 Target "All" DoNothing
-"Clean" ==> "Build" ==> "Tests" ==> "All"
+"Clean" ==> "All"
+"Build" ==> "All"
+"Tests" ==> "All"
 
 Target "Release" DoNothing
 "All" ==> "Release"
+"NuGet" ==> "Release"
  
 RunTargetOrDefault "All"
