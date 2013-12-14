@@ -74,7 +74,7 @@ Target "BuildOtherProjects" (fun _ ->
 
 Target "BuildTests" (fun _ ->    
     testProjects
-      |> MSBuildDebug "" "Rebuild" 
+      |> MSBuildRelease "" "Build" 
       |> Log "Build Tests: "
 )
 
@@ -164,4 +164,4 @@ Target "Release" DoNothing
 "All" ==> "Release"
 "NuGet" ==> "Release"
  
-RunTargetOrDefault "All"
+RunTargetOrDefault "Tests"
