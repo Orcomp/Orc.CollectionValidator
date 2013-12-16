@@ -15,7 +15,7 @@ let srcDir  = @".\src\"
 let deploymentDir  = @".\deployment\"
 let nugetPath = srcDir + @"\.nuget\nuget.exe"
 let nugetAccessKey = File.ReadAllText(@".\NuGet.key")
-let version = "1.0.0.0"
+let version = File.ReadAllText(@".\version.txt")
 
 let outputDir = @".\output\"
 let outputBinDir = outputDir + @"bin\"
