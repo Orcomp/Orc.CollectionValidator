@@ -14,7 +14,7 @@ open Fake.MSTest
 let srcDir  = @".\src\"
 let deploymentDir  = @".\deployment\"
 let nugetPath = srcDir + @"\.nuget\nuget.exe"
-let nugetAccessKey = ""
+let nugetAccessKey = File.ReadAllText(@".\NuGet.key")
 let version = "1.0.0.0"
 
 let outputDir = @".\output\"
