@@ -126,6 +126,7 @@ Target "NuGet" (fun _ ->
     let doPackage dependencies =   
         NuGet (fun p -> 
             {p with
+                Project = "Orc.CollectionValidator"
                 Version = version
                 ToolPath = nugetPath
                 OutputPath = dllDeploymentDir
