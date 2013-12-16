@@ -18,8 +18,9 @@ let nugetAccessKey = File.ReadAllText(@".\NuGet.key")
 let version = File.ReadAllText(@".\version.txt")
 
 let outputDir = @".\output\"
-let outputBinDir = outputDir + @"bin\"
-let outputTestDir = outputDir + @"tests\"
+let outputReleaseDir = @".\output\release\NET35\"
+let outputBinDir = outputReleaseDir + @"Orc.CollectionValidator\"
+let outputTestDir = outputReleaseDir + @"Orc.CollectionValidator.Test\"
 let testResultsDir = outputDir + @"TestResults\"
 
 let outputBinFiles = !! (outputBinDir + @"\**\*.*")
@@ -165,4 +166,4 @@ Target "Release" DoNothing
 "All" ==> "Release"
 "NuGet" ==> "Release"
  
-RunTargetOrDefault "Tests"
+RunTargetOrDefault "All"
