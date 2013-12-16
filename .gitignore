@@ -110,3 +110,4 @@ UpgradeLog*.XML
 # FAKE build
 tools/FAKE
 output/
+NuGet.key
