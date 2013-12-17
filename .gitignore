@@ -2,6 +2,10 @@
 [Bb]in/
 [Oo]bj/
 
+# NuGet.key
+NuGet.key
+Nuget.key
+
 # mstest test results
 TestResults
 
