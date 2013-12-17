@@ -6,6 +6,9 @@
 NuGet.key
 Nuget.key
 
+# jEdit temp file
+*.*~
+
 # mstest test results
 TestResults
 
