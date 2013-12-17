@@ -14,7 +14,7 @@ open Fake.MSTest
 let srcDir  = @".\src\"
 let deploymentDir  = @".\deployment\"
 let nugetPath = srcDir + @"\.nuget\nuget.exe"
-let nugetAccessKey = File.ReadAllText(@".\NuGet.key")
+let nugetAccessKey = File.ReadAllText(@".\Nuget.key")
 let version = File.ReadAllText(@".\version.txt")
 
 let outputDir = @".\output\"
@@ -26,8 +26,8 @@ let testResultsDir = outputDir + @"TestResults\"
 let outputBinFiles = !! (outputBinDir + @"\**\*.*")
                             -- "*.vshost.exe"
 
-let tests = srcDir + @"\**\*.Test.csproj" 
-let allProjects = srcDir + @"\**\*.csproj" 
+let tests = srcDir + @"\**\*.Test.csproj"
+let allProjects = srcDir + @"\**\*.csproj"
 
 let testProjects  = !! tests
 let otherProjects = !! allProjects
@@ -67,15 +67,15 @@ Target "UpdateAssemblyVersion" (fun _ ->
       File.WriteAllLines(solutionAssemblyInfo, content, Encoding.Unicode)
 )
 
-Target "BuildOtherProjects" (fun _ ->    
+Target "BuildOtherProjects" (fun _ ->
     otherProjects
-      |> MSBuildRelease "" "Rebuild" 
+      |> MSBuildRelease "" "Rebuild"
       |> Log "Build Other Projects: "
 )
 
-Target "BuildTests" (fun _ ->    
+Target "BuildTests" (fun _ ->
     testProjects
-      |> MSBuildRelease "" "Build" 
+      |> MSBuildRelease "" "Build"
       |> Log "Build Tests: "
 )
 
@@ -87,14 +87,14 @@ Target "RunTests" (fun _ ->
     CleanDir testResultsDir
     CreateDir testResultsDir
 
-    !! (outputDir + @"\**\*.Test.dll") 
+    !! (outputDir + @"\**\*.Test.dll")
       |> MSTest (fun p ->
                   { p with
                      TimeOut = TimeSpan.FromMinutes 20.
                      ResultsDir = testResultsDir})
 )
 
-FinalTarget "CloseMSTestRunner" (fun _ ->  
+FinalTarget "CloseMSTestRunner" (fun _ ->
     ProcessHelper.killProcess "mstest.exe"
 )
 
@@ -106,7 +106,7 @@ Target "NuGet" (fun _ ->
     let getOutputFile ext = sprintf @"%s\Orc.CollectionValidator.%s" outputBinDir ext
     let libraryFiles = !! (getOutputFile "dll")
                         ++ (getOutputFile "xml")
-    
+
     let libraryDependencies =
                     ["FluentValidation", GetPackageVersion (srcDir + "/packages/") "FluentValidation"]
 
@@ -115,17 +115,17 @@ Target "NuGet" (fun _ ->
     let getNupkgFile = sprintf "%s\Orc.CollectionValidator.%s.nupkg" dllDeploymentDir version
     let getNuspecFile = sprintf "%stemplates\Orc.CollectionValidator.nuspec" deploymentDir
 
-    let preparePackage filesToPackage = 
+    let preparePackage filesToPackage =
         CreateDir workingDeploymentDir
         CreateDir dllDeploymentDir
         CopyFiles dllDeploymentDir filesToPackage
 
-    let cleanPackage name = 
+    let cleanPackage name =
         MoveFile workingDeploymentDir getNupkgFile
         DeleteDir (workingDeploymentDir + "lib")
 
-    let doPackage dependencies =   
-        NuGet (fun p -> 
+    let doPackage dependencies =
+        NuGet (fun p ->
             {p with
                 Project = "Orc.CollectionValidator"
                 Version = version
@@ -136,7 +136,7 @@ Target "NuGet" (fun _ ->
                 Publish = not (String.IsNullOrEmpty nugetAccessPublishKey)
                 AccessKey = nugetAccessPublishKey })
                 getNuspecFile
-    
+
     let doAll files depenencies =
         preparePackage files
         doPackage depenencies
@@ -165,5 +165,5 @@ Target "All" DoNothing
 Target "Release" DoNothing
 "All" ==> "Release"
 "NuGet" ==> "Release"
- 
+
 RunTargetOrDefault "All"
