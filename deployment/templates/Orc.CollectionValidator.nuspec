@@ -22,5 +22,6 @@
 	<projectUrl>https://github.com/Orcomp/Orc.CollectionValidator</projectUrl>
 	<!--<licenseUrl>http://catel.codeplex.com/license</licenseUrl>-->
 	<!--<iconUrl>http://www.catenalogic.com/catel.png</iconUrl>-->
+	@dependencies@
   </metadata>
 </package>
